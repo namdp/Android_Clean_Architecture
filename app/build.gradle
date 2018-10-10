@@ -1,10 +1,9 @@
 apply plugin: 'com.android.application'
-apply plugin: 'jacoco'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
-
 apply plugin: 'kotlin-allopen'
 apply plugin: 'androidx.navigation.safeargs'
+apply plugin: 'realm-android'
 
 android {
     compileSdkVersion build_versions.target_sdk
@@ -60,11 +59,13 @@ android {
     buildTypes {
         debug {
             debuggable true
+            buildConfigField "String", "SERVER_ADDRESS", STAGING_SERVER_ADDRESS
         }
         release {
             debuggable false
             minifyEnabled true
             shrinkResources true
+            buildConfigField "String", "SERVER_ADDRESS", SERVER_ADDRESS
         }
     }
 }
@@ -73,7 +74,7 @@ dependencies {
     implementation deps.support.recyclerview
     implementation deps.support.cardview
     implementation deps.support.design
-    implementation deps.support.constraint_layout
+    implementation deps.constraint_layout
 
     implementation deps.kotlin.stdlib
 
@@ -81,16 +82,25 @@ dependencies {
     implementation deps.lifecycle.extensions
     implementation deps.lifecycle.java8
     implementation deps.navigation.fragment_ktx
+    kapt deps.lifecycle.compiler
 
     implementation deps.dagger.runtime
     implementation deps.dagger.android
     implementation deps.dagger.android_support
+    kapt deps.dagger.android_support_compiler
+    kapt deps.dagger.compiler
 
     implementation deps.retrofit.runtime
     implementation deps.retrofit.gson
+    implementation deps.retrofit.adapter
+    implementation deps.okhttp_logging_interceptor
+
     implementation deps.glide.runtime
 
-    kapt deps.dagger.android_support_compiler
-    kapt deps.dagger.compiler
-    kapt deps.lifecycle.compiler
+    implementation deps.rx.java2
+    implementation deps.rx.android
+    implementation deps.rx.java2_extentions
+    implementation deps.rx.uber_autodispose
+
+    implementation deps.timber
 }
