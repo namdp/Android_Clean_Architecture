@@ -1,11 +1,11 @@
 package com.namdinh.cleanarchitecture.api
 
 import androidx.lifecycle.LiveData
-import com.namdinh.cleanarchitecture.api.helpers.ApiResponse
-import com.namdinh.cleanarchitecture.api.responses.RepoSearchResponse
-import com.namdinh.cleanarchitecture.entities.ContributorEntity
-import com.namdinh.cleanarchitecture.entities.RepoEntity
-import com.namdinh.cleanarchitecture.entities.UserEntity
+import com.namdinh.cleanarchitecture.api.helper.ApiResponse
+import com.namdinh.cleanarchitecture.api.response.RepoSearchResponse
+import com.namdinh.cleanarchitecture.db.entity.ContributorEntity
+import com.namdinh.cleanarchitecture.db.entity.RepoEntity
+import com.namdinh.cleanarchitecture.db.entity.UserEntity
 import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Path

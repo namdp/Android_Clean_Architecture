@@ -24,9 +24,9 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.FragmentManager
 import com.namdinh.cleanarchitecture.CleanArchitectureApp
-import com.namdinh.cleanarchitecture.di.components.DaggerAppComponent
-import com.namdinh.cleanarchitecture.di.helpers.Injectable
-import com.namdinh.cleanarchitecture.di.modules.RealmModule
+import com.namdinh.cleanarchitecture.di.component.DaggerAppComponent
+import com.namdinh.cleanarchitecture.di.helper.Injectable
+import com.namdinh.cleanarchitecture.di.module.RealmModule
 import dagger.android.AndroidInjection
 import dagger.android.support.AndroidSupportInjection
 import dagger.android.support.HasSupportFragmentInjector
