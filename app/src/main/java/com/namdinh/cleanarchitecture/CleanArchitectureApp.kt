@@ -18,7 +18,7 @@ package com.namdinh.cleanarchitecture
 
 import android.app.Activity
 import android.app.Application
-import com.namdinh.cleanarchitecture.di.AppInjector
+import com.namdinh.cleanarchitecture.core.di.AppInjector
 import dagger.android.DispatchingAndroidInjector
 import dagger.android.HasActivityInjector
 import timber.log.Timber

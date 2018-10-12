@@ -31,12 +31,13 @@ versions.android_gradle_plugin = "3.2.0"
 versions.kotlin = "1.2.71"
 
 versions.arch_core = "2.0.0"
+versions.room = "2.0.0"
 versions.lifecycle = "2.0.0"
 versions.navigation = "1.0.0-alpha06"
 versions.support = "1.0.0"
 versions.constraint_layout = "2.0.0-alpha2"
 
-versions.dagger = "2.17"
+versions.dagger = "2.16"
 versions.retrofit = "2.3.0"
 versions.realm = "5.7.0"
 versions.okhttp_logging_interceptor = "3.9.0"
@@ -63,6 +64,13 @@ deps.kotlin = kotlin
 def arch_core = [:]
 arch_core.testing = "androidx.arch.core:core-testing:$versions.arch_core"
 deps.arch_core = arch_core
+
+def room = [:]
+room.runtime = "androidx.room:room-runtime:$versions.room"
+room.compiler = "androidx.room:room-compiler:$versions.room"
+room.rxjava2 = "androidx.room:room-rxjava2:$versions.room"
+room.testing = "androidx.room:room-testing:$versions.room"
+deps.room = room
 
 def lifecycle = [:]
 lifecycle.runtime = "androidx.lifecycle:lifecycle-runtime:$versions.lifecycle"

@@ -78,11 +78,13 @@ dependencies {
 
     implementation deps.kotlin.stdlib
 
+    implementation deps.navigation.fragment_ktx
     implementation deps.lifecycle.runtime
     implementation deps.lifecycle.extensions
     implementation deps.lifecycle.java8
-    implementation deps.navigation.fragment_ktx
+    implementation deps.room.runtime
     kapt deps.lifecycle.compiler
+    kapt deps.room.compiler
 
     implementation deps.dagger.runtime
     implementation deps.dagger.android
