@@ -2,7 +2,7 @@ package com.namdinh.cleanarchitecture.core.di.module
 
 import android.app.Application
 import com.namdinh.cleanarchitecture.core.di.scope.PerApplication
-import com.namdinh.cleanarchitecture.data.db.realm.helper.RealmModules
+import com.namdinh.cleanarchitecture.data.local.realm.helper.RealmModules
 import dagger.Module
 import dagger.Provides
 import io.realm.Realm

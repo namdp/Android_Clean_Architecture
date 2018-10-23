@@ -83,6 +83,7 @@ dependencies {
     implementation deps.lifecycle.extensions
     implementation deps.lifecycle.java8
     implementation deps.room.runtime
+    implementation deps.room.rxjava2
     kapt deps.lifecycle.compiler
     kapt deps.room.compiler
 
