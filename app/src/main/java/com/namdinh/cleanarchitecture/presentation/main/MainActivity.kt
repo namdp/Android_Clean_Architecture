@@ -1,4 +1,4 @@
-package com.namdinh.cleanarchitecture.presentation
+package com.namdinh.cleanarchitecture.presentation.main
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
