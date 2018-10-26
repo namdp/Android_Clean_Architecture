@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+  ~ Copyright (C) 2017 The Android Open Source Project
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~      http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  -->
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <import type="com.namdinh.cleanarchitecture.data.remote.helper.rx.Resource" />
+
+        <variable
+            name="resource"
+            type="Resource" />
+
+        <variable
+            name="callback"
+            type="com.namdinh.cleanarchitecture.presentation.base.helper.google.RetryCallback" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="@dimen/spacing_8"
+        android:visibility="@{resource instanceof Resource.Success ? View.GONE : View.VISIBLE}">
+
+        <ProgressBar
+            android:id="@+id/pb_loading"
+            style="?android:attr/progressBarStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="@{resource instanceof Resource.Loading ? View.VISIBLE : View.GONE}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:visibility="visible" />
+
+        <LinearLayout
+            android:id="@+id/layout_retry"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:onClick="@{() -> callback.retry()}"
+            android:orientation="vertical"
+            android:visibility="@{resource instanceof Resource.Failure ? View.VISIBLE : View.GONE}"
+            tools:visibility="gone">
+
+            <ImageView
+                android:id="@+id/iv_sad_cloud"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_sad_cloud"
+                tools:ignore="ContentDescription" />
+
+            <TextView
+                android:id="@+id/tv_error_msg"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{resource.failureMessage ?? @string/unknown_error}"
+                android:textStyle="bold"
+                tools:text="Can't connect" />
+
+            <TextView
+                android:id="@+id/tv_tap_to_retry"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawableStart="@drawable/ic_retry_small"
+                android:drawableLeft="@drawable/ic_retry_small"
+                android:text="@string/tap_to_retry"
+                android:textSize="@dimen/text_size_small" />
+        </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
+

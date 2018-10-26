@@ -1,8 +1,7 @@
 <resources>
     <string name="app_name">CleanArchitecture</string>
-    <string name="retry">Retry</string>
+    <string name="tap_to_retry">Tap to Retry</string>
     <string name="unknown_error">Unknown Error</string>
-
 
     <string name="a11y_user_photo">user photo</string>
     <string name="a11y_user_name">user name</string>
