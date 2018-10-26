@@ -18,8 +18,6 @@ import io.reactivex.schedulers.Schedulers
  *   + List query -> if there is no record, then at least we’ll get an empty list instead of complete silence
  *
  * - Reference: https://codinginfinite.com/android-room-persistent-rxjava
- *
- * @param ResultType should be List to get at least we’ll get an empty list instead of complete silence.
  */
 abstract class NetworkBoundResourceFlowable<ResultType, RequestType>() {
 
@@ -54,8 +52,7 @@ abstract class NetworkBoundResourceFlowable<ResultType, RequestType>() {
 
         // When there is no data in the Room database and the query returns no rows,
         // the Flowable will not emit, neither onNext, nor onError
-        // -> return null to downstream and continue fetch data from network
-
+        // -> ResultType must wrapped by List to get at least we’ll get an empty list instead of complete silence.
         result = diskObservable
                 .flatMap<Resource<ResultType>> { resultData ->
                     if (shouldFetch(resultData)) {
@@ -68,6 +65,7 @@ abstract class NetworkBoundResourceFlowable<ResultType, RequestType>() {
                     onFetchFailed()
                     Resource.Failure(it)
                 }
+                .startWith(Resource.Loading())
                 // Read results in Android Main Thread (UI)
                 .observeOn(AndroidSchedulers.mainThread())
     }

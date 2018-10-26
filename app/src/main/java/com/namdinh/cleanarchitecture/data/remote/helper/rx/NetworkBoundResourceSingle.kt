@@ -52,7 +52,7 @@ abstract class NetworkBoundResourceSingle<ResultType, RequestType>() {
         }
 
         result = diskObservable
-                .onErrorReturn { throwable ->
+                .onErrorResumeNext { throwable ->
                     when (throwable) {
                         //When there is no data in the Room database and the query returns no rows,
                         // Single will trigger onError(EmptyResultSetException.class)
