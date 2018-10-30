@@ -5,7 +5,6 @@ import com.namdinh.cleanarchitecture.core.di.scope.DataBinding
 import dagger.Module
 import dagger.Provides
 
-
 @Module
 class BindingModule {
     @DataBinding

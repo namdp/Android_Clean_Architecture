@@ -2,7 +2,13 @@ package com.namdinh.cleanarchitecture.core.di.component
 
 import android.app.Application
 import com.namdinh.cleanarchitecture.CleanArchitectureApp
-import com.namdinh.cleanarchitecture.core.di.module.*
+import com.namdinh.cleanarchitecture.core.di.module.AppModule
+import com.namdinh.cleanarchitecture.core.di.module.NetworkModule
+import com.namdinh.cleanarchitecture.core.di.module.RealmModule
+import com.namdinh.cleanarchitecture.core.di.module.RoomModule
+import com.namdinh.cleanarchitecture.core.di.module.builder.ActivityBuildersModule
+import com.namdinh.cleanarchitecture.core.di.module.builder.FragmentBuildersModule
+import com.namdinh.cleanarchitecture.core.di.module.builder.RepositoryBuildersModule
 import com.namdinh.cleanarchitecture.core.di.qualifier.ServerAddress
 import dagger.BindsInstance
 import dagger.Component
@@ -14,10 +20,12 @@ import javax.inject.Singleton
         modules = [
             AndroidInjectionModule::class,
             AppModule::class,
+            NetworkModule::class,
+            RoomModule::class,
             RealmModule::class,
+            RepositoryBuildersModule::class,
             ActivityBuildersModule::class,
-            FragmentBuildersModule::class,
-            RepositoryBuildersModule::class]
+            FragmentBuildersModule::class]
 )
 interface AppComponent {
 

@@ -1,4 +1,4 @@
-package com.namdinh.cleanarchitecture.core.di.module
+package com.namdinh.cleanarchitecture.core.di.module.builder
 
 import com.namdinh.cleanarchitecture.presentation.search.SearchFragment
 import dagger.Module

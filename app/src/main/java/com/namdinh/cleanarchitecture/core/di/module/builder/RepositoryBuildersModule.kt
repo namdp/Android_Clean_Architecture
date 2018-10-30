@@ -1,4 +1,4 @@
-package com.namdinh.cleanarchitecture.core.di.module
+package com.namdinh.cleanarchitecture.core.di.module.builder
 
 import com.namdinh.cleanarchitecture.core.helper.AppExecutors
 import com.namdinh.cleanarchitecture.data.local.room.GithubDb
@@ -13,21 +13,17 @@ import dagger.Module
 import dagger.Provides
 
 @Suppress("unused")
-@Module(includes = [RoomModule::class, NetworkModule::class])
+@Module
 class RepositoryBuildersModule {
     @Provides
-    fun providesRepoRepository(appExecutors: AppExecutors,
-                               githubDb: GithubDb,
-                               githubService: GithubService,
-                               repoDao: RepoDao): RepoRepository {
+    fun providesRepoRepository(appExecutors: AppExecutors, githubDb: GithubDb,
+                               githubService: GithubService, repoDao: RepoDao): RepoRepository {
         return RepoRepositoryImpl(appExecutors, githubDb, githubService, repoDao)
     }
 
     @Provides
-    fun providesUserRepository(appExecutors: AppExecutors,
-                               githubDb: GithubDb,
-                               githubService: GithubService,
-                               userDao: UserDao): UserRepository {
+    fun providesUserRepository(appExecutors: AppExecutors, githubDb: GithubDb,
+                               githubService: GithubService, userDao: UserDao): UserRepository {
         return UserRepositoryImpl(appExecutors, githubDb, githubService, userDao)
     }
 }
