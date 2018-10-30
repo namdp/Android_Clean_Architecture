@@ -1,13 +1,13 @@
 package com.namdinh.cleanarchitecture.presentation.main
 
-import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
 import com.namdinh.cleanarchitecture.R
+import com.namdinh.cleanarchitecture.presentation.base.activity.BaseActivity
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : BaseActivity() {
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
-    }
+    override val layoutId: Int
+        get() = R.layout.activity_main
+
+    override val navControllerId: Int
+        get() = R.id.nav_host_fragment
 }

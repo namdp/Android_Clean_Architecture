@@ -109,3 +109,6 @@ dependencies {
 
     implementation deps.timber
 }
+repositories {
+    mavenCentral()
+}

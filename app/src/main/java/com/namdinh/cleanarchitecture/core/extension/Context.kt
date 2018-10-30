@@ -18,8 +18,15 @@ package com.namdinh.cleanarchitecture.core.extension
 import android.content.Context
 import android.net.ConnectivityManager
 import android.net.NetworkInfo
+import android.os.IBinder
+import android.view.inputmethod.InputMethodManager
 
 val Context.networkInfo: NetworkInfo?
     get() = (this.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager).activeNetworkInfo
 
 val Context.isNetworkAvailable get() = networkInfo?.isConnected
+
+fun Context.dismissKeyboard(windowToken: IBinder) {
+    val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager
+    imm?.hideSoftInputFromWindow(windowToken, 0)
+}

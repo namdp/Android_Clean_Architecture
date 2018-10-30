@@ -5,7 +5,9 @@ import com.namdinh.cleanarchitecture.domain.vo.Contributor
 import com.namdinh.cleanarchitecture.domain.vo.Repo
 import io.reactivex.Flowable
 import io.reactivex.Single
+import javax.inject.Singleton
 
+@Singleton
 interface RepoRepository {
 
     fun loadRepos(owner: String): Flowable<Resource<List<Repo>>>

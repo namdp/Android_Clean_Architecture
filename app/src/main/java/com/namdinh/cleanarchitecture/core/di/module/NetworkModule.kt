@@ -4,7 +4,7 @@ import android.app.Application
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.namdinh.cleanarchitecture.BuildConfig
-import com.namdinh.cleanarchitecture.core.di.scope.PerApplication
+import com.namdinh.cleanarchitecture.core.di.qualifier.ServerAddress
 import com.namdinh.cleanarchitecture.data.remote.GithubService
 import com.namdinh.cleanarchitecture.data.remote.helper.google.LiveDataCallAdapterFactory
 import dagger.Module
@@ -18,12 +18,13 @@ import retrofit2.converter.gson.GsonConverterFactory
 import java.text.DateFormat
 import java.util.concurrent.TimeUnit
 import javax.inject.Named
+import javax.inject.Singleton
 
 @Module
 class NetworkModule {
 
     @Provides
-    @PerApplication
+    @Singleton
     fun provideDefaultGsonBuilder(): GsonBuilder {
         val gsonBuilder = GsonBuilder()
         gsonBuilder.setDateFormat(DateFormat.FULL)
@@ -31,19 +32,19 @@ class NetworkModule {
     }
 
     @Provides
-    @PerApplication
+    @Singleton
     fun provideLiveDataCallAdapterFactory(): LiveDataCallAdapterFactory {
         return LiveDataCallAdapterFactory()
     }
 
     @Provides
-    @PerApplication
+    @Singleton
     internal fun provideGson(gsonBuilder: GsonBuilder): Gson {
         return gsonBuilder.create()
     }
 
     @Provides
-    @PerApplication
+    @Singleton
     internal fun provideHttpLoggingInterceptor(): HttpLoggingInterceptor {
         val loggingInterceptor = HttpLoggingInterceptor()
         loggingInterceptor.level = if (BuildConfig.DEBUG) HttpLoggingInterceptor.Level.BODY else HttpLoggingInterceptor.Level.NONE
@@ -51,14 +52,14 @@ class NetworkModule {
     }
 
     @Provides
-    @PerApplication
+    @Singleton
     internal fun provideOkHttpCache(application: Application): Cache {
         return Cache(application.cacheDir, (10 * 1024 * 1024).toLong())  // 10 MiB
     }
 
     @Provides
     @Named("cached")
-    @PerApplication
+    @Singleton
     internal fun provideCachedOkHttpClient(loggingInterceptor: HttpLoggingInterceptor, cache: Cache): OkHttpClient {
         return OkHttpClient.Builder()
                 .cache(cache)
@@ -70,7 +71,7 @@ class NetworkModule {
 
     @Provides
     @Named("non_cached")
-    @PerApplication
+    @Singleton
     internal fun provideOkHttpClient(loggingInterceptor: HttpLoggingInterceptor): OkHttpClient {
         return OkHttpClient.Builder()
                 .addInterceptor(loggingInterceptor)
@@ -80,8 +81,8 @@ class NetworkModule {
     }
 
     @Provides
-    @PerApplication
-    internal fun provideRetrofit(@Named("server_address") serverAddress: String,
+    @Singleton
+    internal fun provideRetrofit(@ServerAddress serverAddress: String,
                                  gson: Gson, liveDataCallAdapterFactory: LiveDataCallAdapterFactory,
                                  @Named("non_cached") okHttpClient: OkHttpClient): Retrofit {
         return Retrofit.Builder()
@@ -94,7 +95,7 @@ class NetworkModule {
     }
 
     @Provides
-    @PerApplication
+    @Singleton
     internal fun provideIThinkApi(retrofit: Retrofit): GithubService {
         return retrofit.create(GithubService::class.java)
     }

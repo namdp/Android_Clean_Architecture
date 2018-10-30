@@ -1,8 +1,5 @@
 package com.namdinh.cleanarchitecture.data.remote.helper.rx
 
-import androidx.databinding.Bindable
-
-
 sealed class Resource<out T> {
     class Loading<out T> : Resource<T>()
 
@@ -10,7 +7,6 @@ sealed class Resource<out T> {
 
     data class Failure<out T>(val throwable: Throwable) : Resource<T>()
 
-    @Bindable
     fun getFailureMessage(): String? {
         (this as? Failure)?.throwable?.message
         return null

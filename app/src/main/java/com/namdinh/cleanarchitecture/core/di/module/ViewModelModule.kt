@@ -16,23 +16,27 @@
 
 package com.namdinh.cleanarchitecture.core.di.module
 
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.namdinh.cleanarchitecture.core.di.helper.ViewModelFactory
+import com.namdinh.cleanarchitecture.core.di.helper.ViewModelKey
+import com.namdinh.cleanarchitecture.presentation.search.SearchViewModel
 import dagger.Binds
 import dagger.Module
+import dagger.multibindings.IntoMap
 
 @Suppress("unused")
 @Module
 abstract class ViewModelModule {
-//    @Binds
+    //    @Binds
 //    @IntoMap
 //    @ViewModelKey(UserViewModel::class)
 //    abstract fun bindUserViewModel(userViewModel: UserViewModel): ViewModel
 //
-//    @Binds
-//    @IntoMap
-//    @ViewModelKey(SearchViewModel::class)
-//    abstract fun bindSearchViewModel(searchViewModel: SearchViewModel): ViewModel
+    @Binds
+    @IntoMap
+    @ViewModelKey(SearchViewModel::class)
+    abstract fun bindSearchViewModel(searchViewModel: SearchViewModel): ViewModel
 //
 //    @Binds
 //    @IntoMap
