@@ -11,6 +11,7 @@ import com.namdinh.cleanarchitecture.data.local.room.entity.RepoSearchResultEnti
 import com.namdinh.cleanarchitecture.data.remote.GithubService
 import com.namdinh.cleanarchitecture.data.remote.helper.google.ApiEmptyResponse
 import com.namdinh.cleanarchitecture.data.remote.helper.google.ApiErrorResponse
+import com.namdinh.cleanarchitecture.data.remote.helper.google.ApiResponse
 import com.namdinh.cleanarchitecture.data.remote.helper.google.ApiSuccessResponse
 import com.namdinh.cleanarchitecture.data.remote.helper.rx.NetworkBoundResourceFlowable
 import com.namdinh.cleanarchitecture.data.remote.helper.rx.Resource
@@ -201,7 +202,8 @@ class RepoRepositoryImpl @Inject constructor(appExecutors: AppExecutors,
                         .observeOn(Schedulers.computation())
                         .firstOrError()
                         .onErrorReturn { throwable -> throw throwable.toAppFailure() }
-                        .map { response ->
+                        .map {
+                            val response = ApiResponse.create(it)
                             when (response) {
                                 is ApiSuccessResponse -> {
                                     saveSearchNextPageResult(query, current, response.body)

@@ -15,7 +15,7 @@
 
         <variable
             name="callback"
-            type="com.namdinh.cleanarchitecture.presentation.base.helper.google.RetryCallback" />
+            type="com.namdinh.cleanarchitecture.presentation.base.view.RetryCallback" />
 
         <variable
             name="resultCount"

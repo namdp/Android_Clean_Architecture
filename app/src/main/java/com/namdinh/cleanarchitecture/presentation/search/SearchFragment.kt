@@ -16,14 +16,13 @@ import com.namdinh.cleanarchitecture.core.helper.autoCleared
 import com.namdinh.cleanarchitecture.data.remote.helper.rx.Resource
 import com.namdinh.cleanarchitecture.databinding.SearchFragmentBinding
 import com.namdinh.cleanarchitecture.presentation.base.fragment.BaseFragment
-import com.namdinh.cleanarchitecture.presentation.base.helper.google.RetryCallback
+import com.namdinh.cleanarchitecture.presentation.base.view.RetryCallback
 import com.namdinh.cleanarchitecture.presentation.repo.RepoListAdapter
 import javax.inject.Inject
 
 class SearchFragment : BaseFragment<SearchFragmentBinding, SearchViewModel>() {
     @Inject
     lateinit var appExecutors: AppExecutors
-
     var adapter by autoCleared<RepoListAdapter>()
 
     override val layoutId: Int get() = R.layout.search_fragment

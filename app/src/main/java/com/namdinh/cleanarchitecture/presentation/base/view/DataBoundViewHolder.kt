@@ -1,4 +1,4 @@
-package com.namdinh.cleanarchitecture.presentation.base.helper.google
+package com.namdinh.cleanarchitecture.presentation.base.view
 
 import androidx.databinding.ViewDataBinding
 import androidx.recyclerview.widget.RecyclerView

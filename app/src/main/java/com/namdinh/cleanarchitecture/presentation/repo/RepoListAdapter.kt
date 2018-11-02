@@ -8,7 +8,7 @@ import com.namdinh.cleanarchitecture.R
 import com.namdinh.cleanarchitecture.core.helper.AppExecutors
 import com.namdinh.cleanarchitecture.databinding.RepoItemBinding
 import com.namdinh.cleanarchitecture.domain.vo.Repo
-import com.namdinh.cleanarchitecture.presentation.base.helper.google.DataBoundListAdapter
+import com.namdinh.cleanarchitecture.presentation.base.view.DataBoundListAdapter
 
 /**
  * A RecyclerView adapter for [Repo] class.

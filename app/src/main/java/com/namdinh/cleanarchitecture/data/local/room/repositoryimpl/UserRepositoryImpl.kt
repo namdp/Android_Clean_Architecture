@@ -6,12 +6,12 @@ import com.namdinh.cleanarchitecture.data.local.room.GithubDb
 import com.namdinh.cleanarchitecture.data.local.room.dao.UserDao
 import com.namdinh.cleanarchitecture.data.local.room.entity.UserEntity
 import com.namdinh.cleanarchitecture.data.remote.GithubService
-import com.namdinh.cleanarchitecture.data.remote.helper.google.ApiResponse
 import com.namdinh.cleanarchitecture.data.remote.helper.rx.NetworkBoundResourceFlowable
 import com.namdinh.cleanarchitecture.data.remote.helper.rx.Resource
 import com.namdinh.cleanarchitecture.domain.repository.UserRepository
 import com.namdinh.cleanarchitecture.domain.vo.User
 import io.reactivex.Flowable
+import retrofit2.Response
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -44,7 +44,7 @@ class UserRepositoryImpl @Inject constructor(appExecutors: AppExecutors,
                 return userDao.findByLogin(login).map { userEntities -> userEntities.map { it.toUser() } }
             }
 
-            override fun createCall(): Flowable<ApiResponse<UserEntity>> {
+            override fun createCall(): Flowable<Response<UserEntity>> {
                 return githubService.getUser(login)
             }
 

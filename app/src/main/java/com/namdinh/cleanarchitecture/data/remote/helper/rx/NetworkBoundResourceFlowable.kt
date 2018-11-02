@@ -1,12 +1,15 @@
 package com.namdinh.cleanarchitecture.data.remote.helper.rx
 
 import com.namdinh.cleanarchitecture.core.extension.toAppFailure
+import com.namdinh.cleanarchitecture.data.remote.helper.google.ApiEmptyResponse
 import com.namdinh.cleanarchitecture.data.remote.helper.google.ApiErrorResponse
 import com.namdinh.cleanarchitecture.data.remote.helper.google.ApiResponse
 import com.namdinh.cleanarchitecture.data.remote.helper.google.ApiSuccessResponse
 import io.reactivex.Flowable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
+import retrofit2.Response
+import timber.log.Timber
 
 /* @Note: Room version 2.0.0
  * - `Single` and `Maybe` are suitable for one-time data retrieval.
@@ -40,10 +43,12 @@ abstract class NetworkBoundResourceFlowable<ResultType, RequestType>() {
                     // Read/Write to disk on Computation Scheduler
                     .observeOn(Schedulers.computation())
                     .onErrorReturn { throwable -> throw throwable.toAppFailure() }
-                    .map { response ->
+                    .map {
+                        val response = ApiResponse.create(it)
                         when (response) {
                             is ApiSuccessResponse -> saveCallResult(processResponse(response))
                             is ApiErrorResponse -> throw response.throwable
+                            is ApiEmptyResponse -> Timber.d("ApiEmptyResponse")
                         }
                     }
                     .onErrorReturn { throwable -> throw throwable.toAppFailure() }
@@ -84,5 +89,5 @@ abstract class NetworkBoundResourceFlowable<ResultType, RequestType>() {
 
     protected abstract fun loadFromDb(): Flowable<ResultType>
 
-    protected abstract fun createCall(): Flowable<ApiResponse<RequestType>>
+    protected abstract fun createCall(): Flowable<Response<RequestType>>
 }
