@@ -8,7 +8,6 @@ sealed class Resource<out T> {
     data class Failure<out T>(val throwable: Throwable) : Resource<T>()
 
     fun getFailureMessage(): String? {
-        (this as? Failure)?.throwable?.message
-        return null
+        return (this as? Failure)?.throwable?.cause?.message
     }
 }

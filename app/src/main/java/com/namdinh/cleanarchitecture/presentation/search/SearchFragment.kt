@@ -96,7 +96,8 @@ class SearchFragment : BaseFragment<SearchFragmentBinding, SearchViewModel>() {
                     adapter.submitList(result.data)
                 }
                 is Resource.Failure -> {
-                    // error state was handled by DataBinding
+                    binding.resultCount = 0
+                    adapter.submitList(null)
                 }
             }
         })

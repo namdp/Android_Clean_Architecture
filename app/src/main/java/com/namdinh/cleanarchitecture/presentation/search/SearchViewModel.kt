@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.LiveDataReactiveStreams
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
+import com.namdinh.cleanarchitecture.core.extension.toAppFailure
 import com.namdinh.cleanarchitecture.core.helper.AbsentLiveData
 import com.namdinh.cleanarchitecture.data.remote.helper.rx.Resource
 import com.namdinh.cleanarchitecture.domain.usecase.SearchNextRepositories
@@ -29,15 +30,15 @@ class SearchViewModel @Inject constructor(private val searchRepositories: Search
                 }
             }
 
-    val loadMoreStatus: MutableLiveData<Resource<Boolean>> = MutableLiveData();
+    val loadMoreStatus: MutableLiveData<Resource<Boolean>> = MutableLiveData()
 
     fun loadNextPage() {
-        query.value?.let {
+        query.value?.let { it ->
             if (it.isNotBlank()) {
                 SingleConsumers.subscribeAutoDispose(searchNextRepositories.execute(SearchNextRepositories.Params(it))
-                        , disposables
+                        .doOnSubscribe { loadMoreStatus.value = Resource.Loading() }, disposables
                         , { status -> loadMoreStatus.value = status }
-                        , { throwable -> loadMoreStatus.value = Resource.Failure(throwable) })
+                        , { throwable -> loadMoreStatus.value = Resource.Failure(throwable.toAppFailure()) })
             }
         }
     }

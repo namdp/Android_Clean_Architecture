@@ -175,8 +175,6 @@ class RepoRepositoryImpl @Inject constructor(appExecutors: AppExecutors,
             repoDao.findSearchResult(query)
                     // Read from disk on Computation Scheduler
                     .subscribeOn(Schedulers.computation())
-                    .firstOrError()
-                    .onErrorReturn { throwable -> throw throwable.toAppFailure() }
                     .flatMap<Resource<Boolean>> {
                         if (it.isNotEmpty()) {
                             val current = it[0]
@@ -185,7 +183,7 @@ class RepoRepositoryImpl @Inject constructor(appExecutors: AppExecutors,
                             Single.just(Resource.Success(false))
                         }
                     }
-                    .onErrorReturn { Resource.Failure(it) }
+                    .onErrorReturn { Resource.Failure(it.toAppFailure()) }
                     // Read results in Android Main Thread (UI)
                     .observeOn(AndroidSchedulers.mainThread())
         }
@@ -200,12 +198,12 @@ class RepoRepositoryImpl @Inject constructor(appExecutors: AppExecutors,
                         .subscribeOn(Schedulers.io())
                         // Read/Write to disk on Computation Scheduler
                         .observeOn(Schedulers.computation())
-                        .firstOrError()
-                        .onErrorReturn { throwable -> throw throwable.toAppFailure() }
                         .map {
                             val response = ApiResponse.create(it)
                             when (response) {
                                 is ApiSuccessResponse -> {
+                                    val body = response.body
+                                    body.nextPage = response.nextPage
                                     saveSearchNextPageResult(query, current, response.body)
                                     Resource.Success(true)
                                 }
@@ -213,7 +211,6 @@ class RepoRepositoryImpl @Inject constructor(appExecutors: AppExecutors,
                                 is ApiErrorResponse -> throw response.throwable
                             }
                         }
-                        .onErrorReturn { throwable -> throw throwable.toAppFailure() }
             } else {
                 Single.just(Resource.Success(false))
             }
@@ -225,9 +222,12 @@ class RepoRepositoryImpl @Inject constructor(appExecutors: AppExecutors,
         ids.addAll(current.repoIds)
         ids.addAll(body.items.map { it.id })
         val merged = RepoSearchResultEntity(
-                query, ids,
-                body.total, body.nextPage
+                query = query,
+                repoIds = ids,
+                totalCount = body.total,
+                next = body.nextPage
         )
+
         githubDb.runInTransaction {
             githubDb.repoDao().insert(merged)
             githubDb.repoDao().insertRepos(body.items)

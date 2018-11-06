@@ -9,6 +9,7 @@ import com.namdinh.cleanarchitecture.data.local.room.entity.ContributorEntity
 import com.namdinh.cleanarchitecture.data.local.room.entity.RepoEntity
 import com.namdinh.cleanarchitecture.data.local.room.entity.RepoSearchResultEntity
 import io.reactivex.Flowable
+import io.reactivex.Single
 
 /**
  * Interface for database access on Repo related operations.
@@ -66,7 +67,6 @@ abstract class RepoDao {
                 val pos2 = order.get(r2.id)
                 pos1 - pos2
             })
-            repositories
         }
     }
 
@@ -75,5 +75,5 @@ abstract class RepoDao {
 
     // @todo Room: we wrapped into `List` to get an empty list instead of complete silence if there is no record
     @Query("SELECT * FROM RepoSearchResultEntity WHERE `query` = :query")
-    abstract fun findSearchResult(query: String): Flowable<List<RepoSearchResultEntity>>
+    abstract fun findSearchResult(query: String): Single<List<RepoSearchResultEntity>>
 }

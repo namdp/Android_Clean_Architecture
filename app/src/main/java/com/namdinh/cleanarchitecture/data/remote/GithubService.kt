@@ -5,6 +5,7 @@ import com.namdinh.cleanarchitecture.data.local.room.entity.RepoEntity
 import com.namdinh.cleanarchitecture.data.local.room.entity.UserEntity
 import com.namdinh.cleanarchitecture.data.remote.response.RepoSearchResponse
 import io.reactivex.Flowable
+import io.reactivex.Single
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Path
@@ -27,6 +28,6 @@ interface GithubService {
     fun searchRepos(@Query("q") query: String): Flowable<Response<RepoSearchResponse>>
 
     @GET("search/repositories")
-    fun searchRepos(@Query("q") query: String, @Query("page") page: Int): Flowable<Response<RepoSearchResponse>>
+    fun searchRepos(@Query("q") query: String, @Query("page") page: Int): Single<Response<RepoSearchResponse>>
 
 }

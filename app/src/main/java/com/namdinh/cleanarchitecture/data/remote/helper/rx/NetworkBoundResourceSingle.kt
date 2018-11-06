@@ -42,7 +42,6 @@ abstract class NetworkBoundResourceSingle<ResultType, RequestType>() {
                     .subscribeOn(Schedulers.io())
                     // Read/Write to disk on Computation Scheduler
                     .observeOn(Schedulers.computation())
-                    .onErrorReturn { throwable -> throw throwable.toAppFailure() }
                     .map {
                         val response = ApiResponse.create(it)
                         when (response) {
@@ -51,9 +50,7 @@ abstract class NetworkBoundResourceSingle<ResultType, RequestType>() {
                             is ApiEmptyResponse -> Timber.d("ApiEmptyResponse")
                         }
                     }
-                    .onErrorReturn { throwable -> throw throwable.toAppFailure() }
                     .flatMap { loadFromDb() }
-                    .onErrorReturn { throwable -> throw throwable.toAppFailure() }
         }
 
         result = diskObservable
@@ -63,7 +60,7 @@ abstract class NetworkBoundResourceSingle<ResultType, RequestType>() {
                         // Single will trigger onError(EmptyResultSetException.class)
                         // -> return null to downstream and continue fetch data from network
                         is EmptyResultSetException -> null
-                        else -> throw throwable.toAppFailure()
+                        else -> throw throwable
                     }
                 }
                 .flatMap<Resource<ResultType>> { resultType ->
@@ -75,7 +72,7 @@ abstract class NetworkBoundResourceSingle<ResultType, RequestType>() {
                 }
                 .onErrorReturn {
                     onFetchFailed()
-                    Resource.Failure(it)
+                    Resource.Failure(it.toAppFailure())
                 }
                 // Read results in Android Main Thread (UI)
                 .observeOn(AndroidSchedulers.mainThread())

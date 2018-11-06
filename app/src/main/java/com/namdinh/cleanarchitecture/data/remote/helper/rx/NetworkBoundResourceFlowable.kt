@@ -32,7 +32,6 @@ abstract class NetworkBoundResourceFlowable<ResultType, RequestType>() {
             loadFromDb()
                     // Read from disk on Computation Scheduler
                     .subscribeOn(Schedulers.computation())
-                    .onErrorReturn { throwable -> throw throwable.toAppFailure() }
         }
 
         // Lazy network observable.
@@ -42,7 +41,6 @@ abstract class NetworkBoundResourceFlowable<ResultType, RequestType>() {
                     .subscribeOn(Schedulers.io())
                     // Read/Write to disk on Computation Scheduler
                     .observeOn(Schedulers.computation())
-                    .onErrorReturn { throwable -> throw throwable.toAppFailure() }
                     .map {
                         val response = ApiResponse.create(it)
                         when (response) {
@@ -51,7 +49,6 @@ abstract class NetworkBoundResourceFlowable<ResultType, RequestType>() {
                             is ApiEmptyResponse -> Timber.d("ApiEmptyResponse")
                         }
                     }
-                    .onErrorReturn { throwable -> throw throwable.toAppFailure() }
                     .flatMap { loadFromDb() }
         }
 
@@ -68,7 +65,7 @@ abstract class NetworkBoundResourceFlowable<ResultType, RequestType>() {
                 }
                 .onErrorReturn {
                     onFetchFailed()
-                    Resource.Failure(it)
+                    Resource.Failure(it.toAppFailure())
                 }
                 .startWith(Resource.Loading())
                 // Read results in Android Main Thread (UI)
