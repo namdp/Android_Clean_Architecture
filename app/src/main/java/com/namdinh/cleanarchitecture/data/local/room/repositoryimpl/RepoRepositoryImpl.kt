@@ -47,17 +47,11 @@ class RepoRepositoryImpl @Inject constructor(appExecutors: AppExecutors,
 
     override fun loadRepos(owner: String): Flowable<Resource<List<Repo>>> {
         return object : NetworkBoundResourceFlowable<List<Repo>, List<RepoEntity>>() {
-            override fun onFetchFailed() {
-                repoListRateLimit.reset(owner)
-            }
+            override fun onFetchFailed() = repoListRateLimit.reset(owner)
 
-            override fun saveCallResult(request: List<RepoEntity>) {
-                repoDao.insertRepos(request)
-            }
+            override fun saveCallResult(request: List<RepoEntity>) = repoDao.insertRepos(request)
 
-            override fun shouldFetch(result: List<Repo>?): Boolean {
-                return result == null || result.isEmpty() || repoListRateLimit.shouldFetch(owner)
-            }
+            override fun shouldFetch(result: List<Repo>?) = result == null || result.isEmpty() || repoListRateLimit.shouldFetch(owner)
 
             override fun loadFromDb() = repoDao.loadRepositories(owner).map { it -> it.map { repoEntity -> repoEntity.toRepo() } }
 
@@ -68,13 +62,9 @@ class RepoRepositoryImpl @Inject constructor(appExecutors: AppExecutors,
 
     override fun loadRepo(owner: String, name: String): Flowable<Resource<List<Repo>>> {
         return object : NetworkBoundResourceFlowable<List<Repo>, RepoEntity>() {
-            override fun onFetchFailed() {
-                repoRateLimit.reset("$owner/$name")
-            }
+            override fun onFetchFailed() = repoRateLimit.reset("$owner/$name")
 
-            override fun saveCallResult(request: RepoEntity) {
-                repoDao.insert(request)
-            }
+            override fun saveCallResult(request: RepoEntity) = repoDao.insert(request)
 
             override fun shouldFetch(result: List<Repo>?) = result == null || result.isEmpty() || repoRateLimit.shouldFetch("$owner/$name")
 
@@ -87,9 +77,7 @@ class RepoRepositoryImpl @Inject constructor(appExecutors: AppExecutors,
 
     override fun loadContributors(owner: String, name: String): Flowable<Resource<List<Contributor>>> {
         return object : NetworkBoundResourceFlowable<List<Contributor>, List<ContributorEntity>>() {
-            override fun onFetchFailed() {
-                contributorListRateLimit.reset("$owner/$name")
-            }
+            override fun onFetchFailed() = contributorListRateLimit.reset("$owner/$name")
 
             override fun saveCallResult(request: List<ContributorEntity>) {
                 request.forEach {
@@ -125,9 +113,7 @@ class RepoRepositoryImpl @Inject constructor(appExecutors: AppExecutors,
 
     override fun search(query: String): Flowable<Resource<List<Repo>>> {
         return object : NetworkBoundResourceFlowable<List<Repo>, RepoSearchResponse>() {
-            override fun onFetchFailed() {
-                searchListRateLimit.reset(query)
-            }
+            override fun onFetchFailed() = searchListRateLimit.reset(query)
 
             override fun saveCallResult(request: RepoSearchResponse) {
                 val repoIds = request.items.map { it.id }

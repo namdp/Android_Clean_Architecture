@@ -20,6 +20,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.namdinh.cleanarchitecture.core.di.helper.ViewModelFactory
 import com.namdinh.cleanarchitecture.core.di.helper.ViewModelKey
+import com.namdinh.cleanarchitecture.presentation.repo.RepoViewModel
 import com.namdinh.cleanarchitecture.presentation.search.SearchViewModel
 import dagger.Binds
 import dagger.Module
@@ -37,11 +38,11 @@ abstract class ViewModelModule {
     @IntoMap
     @ViewModelKey(SearchViewModel::class)
     abstract fun bindSearchViewModel(searchViewModel: SearchViewModel): ViewModel
-//
-//    @Binds
-//    @IntoMap
-//    @ViewModelKey(RepoViewModel::class)
-//    abstract fun bindRepoViewModel(repoViewModel: RepoViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(RepoViewModel::class)
+    abstract fun bindRepoViewModel(repoViewModel: RepoViewModel): ViewModel
 
     @Binds
     abstract fun bindViewModelFactory(factory: ViewModelFactory): ViewModelProvider.Factory

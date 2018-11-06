@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="contributor"
+            type="com.namdinh.cleanarchitecture.domain.vo.Contributor" />
+    </data>
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardUseCompatPadding="true">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+
+            <ImageView
+                android:id="@+id/iv_contributor_avatar"
+                android:layout_width="@dimen/photo_size"
+                android:layout_height="@dimen/photo_size"
+                android:layout_marginStart="@dimen/spacing_8"
+                android:layout_marginLeft="@dimen/spacing_8"
+                android:layout_marginTop="@dimen/spacing_8"
+                android:layout_marginBottom="@dimen/spacing_8"
+                android:adjustViewBounds="false"
+                android:contentDescription="@string/contributor_avatar"
+                android:cropToPadding="false"
+                android:scaleType="centerCrop"
+                app:imageUrl="@{contributor.avatarUrl}"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:placeHolder="@{@android:drawable/btn_star}"
+                tools:srcCompat="@android:drawable/btn_star" />
+
+            <TextView
+                android:id="@+id/tv_contributor_login"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/spacing_8"
+                android:layout_marginLeft="@dimen/spacing_8"
+                android:layout_marginTop="@dimen/spacing_8"
+                android:text="@{contributor.login}"
+                app:layout_constraintStart_toEndOf="@+id/iv_contributor_avatar"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="Yigit Boyar" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
+</layout>

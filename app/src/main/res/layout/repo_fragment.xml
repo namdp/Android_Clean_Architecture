@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <import type="com.namdinh.cleanarchitecture.data.remote.helper.rx.Resource" />
+
+        <variable
+            name="repo"
+            type="com.namdinh.cleanarchitecture.domain.vo.Repo" />
+
+        <variable
+            name="repoResource"
+            type="Resource" />
+
+        <variable
+            name="retryCallback"
+            type="com.namdinh.cleanarchitecture.presentation.base.view.RetryCallback" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tv_owner_name"
+            style="@style/TextAppearance.AppCompat.Headline"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/spacing_8"
+            android:layout_marginLeft="@dimen/spacing_8"
+            android:layout_marginTop="@dimen/spacing_8"
+            android:text="@{@string/repo_full_name(repo.owner.login, repo.name)}"
+            android:visibility="@{repo != null ? View.VISIBLE : View.GONE}"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="name of the user" />
+
+        <TextView
+            android:id="@+id/tv_repo_description"
+            style="@style/TextAppearance.AppCompat.Body1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/spacing_8"
+            android:layout_marginLeft="@dimen/spacing_8"
+            android:layout_marginTop="@dimen/spacing_8"
+            android:text="@{repo.description}"
+            android:visibility="@{repo != null ? View.VISIBLE : View.GONE}"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_owner_name"
+            tools:text="description of the user" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_contributors"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginStart="@dimen/spacing_8"
+            android:layout_marginTop="@dimen/spacing_8"
+            android:layout_marginEnd="@dimen/spacing_8"
+            android:layout_marginBottom="@dimen/spacing_8"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_repo_description"
+            tools:listitem="@layout/contributor_item" />
+
+        <include
+            layout="@layout/loading_state"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/spacing_8"
+            android:layout_marginTop="@dimen/spacing_8"
+            android:layout_marginEnd="@dimen/spacing_8"
+            android:layout_marginBottom="@dimen/spacing_8"
+            app:callback="@{() -> retryCallback.retry()}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:resource="@{repoResource}" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

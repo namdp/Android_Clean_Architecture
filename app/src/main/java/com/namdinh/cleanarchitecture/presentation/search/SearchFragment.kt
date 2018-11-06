@@ -32,47 +32,14 @@ class SearchFragment : BaseFragment<SearchFragmentBinding, SearchViewModel>() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         initRecyclerView()
-        val rvAdapter = RepoListAdapter(appExecutors = appExecutors, showFullName = true)
-        { repo ->
-            //@todo
-            // navController.navigate(SearchFragmentDirections.showRepo(repo.owner.login, repo.name))
+        val rvAdapter = RepoListAdapter(appExecutors = appExecutors, showFullName = true) { repo ->
+            navController.navigate(SearchFragmentDirections.showRepo(repo.owner.login, repo.name))
         }
         binding.rvRepo.adapter = rvAdapter
         adapter = rvAdapter
 
         initSearchInputListener()
-
-        binding.callback = object : RetryCallback {
-            override fun retry() {
-                viewModel.refresh()
-            }
-        }
-    }
-
-    private fun initSearchInputListener() {
-        binding.etSearch.setOnEditorActionListener { view: View, actionId: Int, _: KeyEvent? ->
-            if (actionId == EditorInfo.IME_ACTION_SEARCH) {
-                doSearch(view)
-                true
-            } else {
-                false
-            }
-        }
-        binding.etSearch.setOnKeyListener { view: View, keyCode: Int, event: KeyEvent ->
-            if (event.action == KeyEvent.ACTION_DOWN && keyCode == KeyEvent.KEYCODE_ENTER) {
-                doSearch(view)
-                true
-            } else {
-                false
-            }
-        }
-    }
-
-    private fun doSearch(v: View) {
-        context?.dismissKeyboard(v.windowToken)
-        val query = binding.etSearch.text.toString()
-        binding.query = query
-        viewModel.setQuery(query)
+        initRetryCallback()
     }
 
     private fun initRecyclerView() {
@@ -85,19 +52,19 @@ class SearchFragment : BaseFragment<SearchFragmentBinding, SearchViewModel>() {
                 }
             }
         })
-        viewModel.repositories.observe(this, Observer { result ->
-            binding.searchResource = result //binding loading(error) state
-            when (result) {
+        viewModel.repositories.observe(this, Observer { resource ->
+            binding.searchResource = resource //binding loading(error) state
+            when (resource) {
                 is Resource.Loading -> {
                     // loading state was handled by DataBinding
                 }
                 is Resource.Success -> {
-                    binding.resultCount = result.data?.size ?: 0
-                    adapter.submitList(result.data)
+                    binding.resultCount = resource.data?.size ?: 0
+                    adapter.submitList(resource.data)
                 }
                 is Resource.Failure -> {
                     binding.resultCount = 0
-                    adapter.submitList(null)
+                    adapter.submitList(emptyList())
                 }
             }
         })
@@ -123,5 +90,39 @@ class SearchFragment : BaseFragment<SearchFragmentBinding, SearchViewModel>() {
                 }
             }
         })
+    }
+
+    private fun doSearch(v: View) {
+        context?.dismissKeyboard(v.windowToken)
+        val query = binding.etSearch.text.toString()
+        binding.query = query
+        viewModel.setQuery(query)
+    }
+
+    private fun initSearchInputListener() {
+        binding.etSearch.setOnEditorActionListener { view: View, actionId: Int, _: KeyEvent? ->
+            if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+                doSearch(view)
+                true
+            } else {
+                false
+            }
+        }
+        binding.etSearch.setOnKeyListener { view: View, keyCode: Int, event: KeyEvent ->
+            if (event.action == KeyEvent.ACTION_DOWN && keyCode == KeyEvent.KEYCODE_ENTER) {
+                doSearch(view)
+                true
+            } else {
+                false
+            }
+        }
+    }
+
+    private fun initRetryCallback() {
+        binding.callback = object : RetryCallback {
+            override fun retry() {
+                viewModel.refresh()
+            }
+        }
     }
 }
