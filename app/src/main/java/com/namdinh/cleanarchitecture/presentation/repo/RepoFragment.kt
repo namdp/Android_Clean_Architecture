@@ -47,8 +47,7 @@ class RepoFragment : BaseFragment<RepoFragmentBinding, RepoViewModel>() {
         })
 
         val adapter = ContributorAdapter(appExecutors) { contributor ->
-            //todo
-            //navController.navigate(RepoFragmentDirections.showUser(contributor.login))
+            navController.navigate(RepoFragmentDirections.showUser(contributor.login))
         }
         this.adapter = adapter
         binding.rvContributors.adapter = adapter

@@ -22,6 +22,7 @@ import com.namdinh.cleanarchitecture.core.di.helper.ViewModelFactory
 import com.namdinh.cleanarchitecture.core.di.helper.ViewModelKey
 import com.namdinh.cleanarchitecture.presentation.repo.RepoViewModel
 import com.namdinh.cleanarchitecture.presentation.search.SearchViewModel
+import com.namdinh.cleanarchitecture.presentation.user.UserViewModel
 import dagger.Binds
 import dagger.Module
 import dagger.multibindings.IntoMap
@@ -29,11 +30,11 @@ import dagger.multibindings.IntoMap
 @Suppress("unused")
 @Module
 abstract class ViewModelModule {
-    //    @Binds
-//    @IntoMap
-//    @ViewModelKey(UserViewModel::class)
-//    abstract fun bindUserViewModel(userViewModel: UserViewModel): ViewModel
-//
+    @Binds
+    @IntoMap
+    @ViewModelKey(UserViewModel::class)
+    abstract fun bindUserViewModel(userViewModel: UserViewModel): ViewModel
+
     @Binds
     @IntoMap
     @ViewModelKey(SearchViewModel::class)

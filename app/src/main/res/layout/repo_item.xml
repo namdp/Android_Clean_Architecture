@@ -45,7 +45,6 @@
                 android:text="@{repo.description}"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/name"
-                tools:layout_editor_absoluteX="8dp"
                 tools:text="this is some description more description more description" />
 
             <TextView

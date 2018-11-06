@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="com.namdinh.cleanarchitecture.R" />
+
+        <import type="android.view.View" />
+
+        <variable
+            name="user"
+            type="com.namdinh.cleanarchitecture.domain.vo.User" />
+
+        <variable
+            name="userResource"
+            type="com.namdinh.cleanarchitecture.data.remote.helper.rx.Resource" />
+
+        <variable
+            name="retryCallback"
+            type="com.namdinh.cleanarchitecture.presentation.base.view.RetryCallback" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:id="@+id/ll_header"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:orientation="horizontal"
+            android:visibility="@{user != null ? View.VISIBLE : View.GONE}"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="MissingConstraints">
+
+            <ImageView
+                android:id="@+id/iv_user_avatar"
+                android:layout_width="@dimen/photo_size"
+                android:layout_height="@dimen/photo_size"
+                android:contentDescription="@string/a11y_user_photo"
+                android:scaleType="centerCrop"
+                app:imageUrl="@{user.avatarUrl}"
+                app:placeHolder="@{R.mipmap.ic_launcher}"
+                tools:background="@mipmap/ic_launcher" />
+
+            <TextView
+                android:id="@+id/tv_user_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/spacing_8"
+                android:layout_marginLeft="@dimen/spacing_8"
+                android:layout_marginTop="@dimen/spacing_8"
+                android:contentDescription="@string/a11y_user_name"
+                android:text="@{user.name ?? user.login}"
+                app:layout_constraintStart_toEndOf="@+id/iv_user_avatar"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="Albert Einstein" />
+        </LinearLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_repos"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="8dp"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/ll_header"
+            tools:listitem="@layout/repo_item" />
+
+        <include
+            layout="@layout/loading_state"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="8dp"
+            app:callback="@{() -> retryCallback.retry()}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:resource="@{userResource}" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
