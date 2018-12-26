@@ -34,6 +34,7 @@ versions.arch_core = "2.0.0"
 versions.room = "2.0.0"
 versions.lifecycle = "2.0.0"
 versions.navigation = "1.0.0-alpha06"
+versions.paging = "2.1.0-beta01"
 versions.support = "1.0.0"
 versions.constraint_layout = "2.0.0-alpha2"
 
@@ -65,13 +66,6 @@ def arch_core = [:]
 arch_core.testing = "androidx.arch.core:core-testing:$versions.arch_core"
 deps.arch_core = arch_core
 
-def room = [:]
-room.runtime = "androidx.room:room-runtime:$versions.room"
-room.compiler = "androidx.room:room-compiler:$versions.room"
-room.rxjava2 = "androidx.room:room-rxjava2:$versions.room"
-room.testing = "androidx.room:room-testing:$versions.room"
-deps.room = room
-
 def lifecycle = [:]
 lifecycle.runtime = "androidx.lifecycle:lifecycle-runtime:$versions.lifecycle"
 lifecycle.extensions = "androidx.lifecycle:lifecycle-extensions:$versions.lifecycle"
@@ -79,6 +73,18 @@ lifecycle.java8 = "androidx.lifecycle:lifecycle-common-java8:$versions.lifecycle
 lifecycle.compiler = "androidx.lifecycle:lifecycle-compiler:$versions.lifecycle"
 lifecycle.reactivestreams = "androidx.lifecycle:lifecycle-reactivestreams:$versions.lifecycle"
 deps.lifecycle = lifecycle
+
+def room = [:]
+room.runtime = "androidx.room:room-runtime:$versions.room"
+room.compiler = "androidx.room:room-compiler:$versions.room"
+room.rxjava2 = "androidx.room:room-rxjava2:$versions.room"
+room.testing = "androidx.room:room-testing:$versions.room"
+deps.room = room
+
+def paging = [:]
+paging.runtime = "androidx.paging:paging-runtime:$versions.paging"
+paging.rxjava2 = "androidx.paging:paging-rxjava2:$versions.paging"
+deps.paging = paging
 
 def navigation = [:]
 navigation.runtime = "android.arch.navigation:navigation-runtime:$versions.navigation"

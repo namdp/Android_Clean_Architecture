@@ -1,0 +1,7 @@
+apply plugin: 'com.android.library'
+apply from: '../code_quality_tools/quality.gradle'
+
+android {
+    compileSdkVersion build_versions.target_sdk
+    buildToolsVersion build_versions.build_tools
+}

@@ -1,0 +1,66 @@
+apply plugin: 'checkstyle'
+apply plugin: 'findbugs'
+apply plugin: 'pmd'
+
+def qualityConfigDir = "$project.rootDir/code_quality_tools"
+def reportsDir = "$project.buildDir/reports"
+
+task checkstyle(type: Checkstyle) {
+    description 'Check code standard'
+    group 'verification'
+    configFile file("$qualityConfigDir/rules-checkstyle.xml")
+    source fileTree("$project.rootDir/app/src/main/java")
+    include '**/*.java'
+    exclude '**/gen/**'
+
+    classpath = files()
+    showViolations true
+    ignoreFailures true
+
+    reports {
+        xml.enabled = true
+        html.enabled = true
+        xml.destination file("$reportsDir/checkstyle/checkstyle.xml")
+        html.destination file("$reportsDir/checkstyle/checkstyle.html")
+    }
+}
+
+task findbugs(type: FindBugs) {
+    description 'Find bugs mainly design flaws, bad practices, multithreaded correctness and code vulnerabilities.'
+    group 'verification'
+    excludeFilter = file("$qualityConfigDir/rules-findbugs.xml")
+    classes = fileTree("$project.rootDir/app/build/intermediates/classes")
+    source = fileTree("$project.rootDir/app/src/main/java")
+    effort 'max'
+    reportLevel = "high"
+
+    classpath = files()
+    ignoreFailures true
+
+    reports {
+        xml.enabled = false
+        html.enabled = true
+        xml.destination file("$reportsDir/findbugs/findbugs.xml")
+        html.destination file("$reportsDir/findbugs/findbugs.html")
+    }
+}
+
+task pmd(type: Pmd) {
+    description 'Identifying potential problems mainly dead code, duplicated code, cyclomatic complexity and overcomplicated expressions'
+    group 'verification'
+    ruleSetFiles = files("$project.rootDir/code_quality_tools/rules-pmd.xml")
+    source = fileTree("$project.rootDir/app/src/main/java")
+    include '**/*.java'
+    exclude '**/gen/**'
+    ignoreFailures true
+
+    classpath = files()
+    ignoreFailures true
+
+    reports {
+        xml.enabled = true
+        html.enabled = true
+        xml.destination file("$reportsDir/pmd/pmd.xml")
+        html.destination file("$reportsDir/pmd/pmd.html")
+    }
+}
