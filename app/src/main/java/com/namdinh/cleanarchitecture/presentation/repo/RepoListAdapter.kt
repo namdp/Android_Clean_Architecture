@@ -22,13 +22,13 @@ class RepoListAdapter(
         diffCallback = object : DiffUtil.ItemCallback<Repo>() {
 
             override fun areItemsTheSame(oldItem: Repo, newItem: Repo): Boolean {
-                return oldItem.owner == newItem.owner
-                        && oldItem.name == newItem.name
+                return oldItem.owner == newItem.owner &&
+                        oldItem.name == newItem.name
             }
 
             override fun areContentsTheSame(oldItem: Repo, newItem: Repo): Boolean {
-                return oldItem.description == newItem.description
-                        && oldItem.stars == newItem.stars
+                return oldItem.description == newItem.description &&
+                        oldItem.stars == newItem.stars
             }
         }
 ) {

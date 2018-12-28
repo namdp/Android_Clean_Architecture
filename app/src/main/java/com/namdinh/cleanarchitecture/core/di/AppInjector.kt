@@ -27,7 +27,7 @@ object AppInjector {
                 .realmModule(RealmModule(application = cleanArchitectureApp)).build()
         appComponent.inject(cleanArchitectureApp)
 
-        //data binding
+        // data binding
         val bindingComponent = DaggerBindingComponent.builder().appComponent(appComponent).build()
         DataBindingUtil.setDefaultComponent(bindingComponent)
 
@@ -38,27 +38,21 @@ object AppInjector {
                     }
 
                     override fun onActivityStarted(activity: Activity) {
-
                     }
 
                     override fun onActivityResumed(activity: Activity) {
-
                     }
 
                     override fun onActivityPaused(activity: Activity) {
-
                     }
 
                     override fun onActivityStopped(activity: Activity) {
-
                     }
 
                     override fun onActivitySaveInstanceState(activity: Activity, outState: Bundle?) {
-
                     }
 
                     override fun onActivityDestroyed(activity: Activity) {
-
                     }
                 })
     }

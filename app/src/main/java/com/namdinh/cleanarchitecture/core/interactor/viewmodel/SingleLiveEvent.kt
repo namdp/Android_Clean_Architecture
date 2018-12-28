@@ -73,12 +73,11 @@ class SingleLiveEvent<T> : MutableLiveData<T>() {
     }
 }
 
-
 /**
  * Usage
  */
 
-//class ListViewModel : ViewModel {
+// class ListViewModel : ViewModel {
 //    private val _navigateToDetails = SingleLiveEvent<Any>()
 //
 //    val navigateToDetails : LiveData<Any>
@@ -88,8 +87,8 @@ class SingleLiveEvent<T> : MutableLiveData<T>() {
 //    fun userClicksOnButton() {
 //        _navigateToDetails.call()
 //    }
-//}
+// }
 
-//myViewModel.navigateToDetails.observe(this, Observer {
+// myViewModel.navigateToDetails.observe(this, Observer {
 //    startActivity(DetailsActivity...)
-//})
+// })

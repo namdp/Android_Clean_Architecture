@@ -83,7 +83,6 @@ data class ApiSuccessResponse<T>(val body: T, val links: Map<String, String>) : 
             }
             return links
         }
-
     }
 }
 

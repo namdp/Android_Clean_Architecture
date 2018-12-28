@@ -29,5 +29,4 @@ interface GithubService {
 
     @GET("search/repositories")
     fun searchRepos(@Query("q") query: String, @Query("page") page: Int): Single<Response<RepoSearchResponse>>
-
 }

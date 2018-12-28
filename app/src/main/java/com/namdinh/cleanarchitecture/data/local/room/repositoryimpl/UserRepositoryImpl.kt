@@ -16,12 +16,13 @@ import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 import javax.inject.Singleton
 
-
 @Singleton
-class UserRepositoryImpl @Inject constructor(appExecutors: AppExecutors,
-                                             githubDb: GithubDb,
-                                             githubService: GithubService,
-                                             private val userDao: UserDao)
+class UserRepositoryImpl @Inject constructor(
+        appExecutors: AppExecutors,
+        githubDb: GithubDb,
+        githubService: GithubService,
+        private val userDao: UserDao
+)
     : BaseRepositoryImpl(appExecutors, githubDb, githubService), UserRepository {
 
     private val userRateLimit = RateLimiter<String>(10, TimeUnit.MINUTES)
@@ -47,7 +48,6 @@ class UserRepositoryImpl @Inject constructor(appExecutors: AppExecutors,
             override fun createCall(): Flowable<Response<UserEntity>> {
                 return githubService.getUser(login)
             }
-
         }.asFlowable()
     }
 }

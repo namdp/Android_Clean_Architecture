@@ -54,7 +54,7 @@ class NetworkModule {
     @Provides
     @Singleton
     internal fun provideOkHttpCache(application: Application): Cache {
-        return Cache(application.cacheDir, (10 * 1024 * 1024).toLong())  // 10 MiB
+        return Cache(application.cacheDir, (10 * 1024 * 1024).toLong()) // 10 MiB
     }
 
     @Provides
@@ -82,9 +82,12 @@ class NetworkModule {
 
     @Provides
     @Singleton
-    internal fun provideRetrofit(@ServerAddress serverAddress: String,
-                                 gson: Gson, liveDataCallAdapterFactory: LiveDataCallAdapterFactory,
-                                 @Named("non_cached") okHttpClient: OkHttpClient): Retrofit {
+    internal fun provideRetrofit(
+            @ServerAddress serverAddress: String,
+            gson: Gson,
+            liveDataCallAdapterFactory: LiveDataCallAdapterFactory,
+            @Named("non_cached") okHttpClient: OkHttpClient
+    ): Retrofit {
         return Retrofit.Builder()
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .addCallAdapterFactory(liveDataCallAdapterFactory)

@@ -6,9 +6,11 @@ import io.realm.Realm
 import io.realm.RealmConfiguration
 import io.realm.RealmModel
 
-abstract class BaseRepository<T : RealmModel>(protected var appExecutors: AppExecutors,
-                                              protected var githubService: GithubService,
-                                              protected var realmConfiguration: RealmConfiguration) {
+abstract class BaseRepository<T : RealmModel>(
+        protected var appExecutors: AppExecutors,
+        protected var githubService: GithubService,
+        protected var realmConfiguration: RealmConfiguration
+) {
 
     protected var realm: Realm = Realm.getInstance(realmConfiguration)
 

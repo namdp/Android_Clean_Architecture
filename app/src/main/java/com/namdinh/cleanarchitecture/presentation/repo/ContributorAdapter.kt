@@ -10,7 +10,9 @@ import com.namdinh.cleanarchitecture.databinding.ContributorItemBinding
 import com.namdinh.cleanarchitecture.domain.vo.Contributor
 import com.namdinh.cleanarchitecture.presentation.base.view.DataBoundListAdapter
 
-class ContributorAdapter(appExecutors: AppExecutors, private val callback: ((Contributor) -> Unit)?
+class ContributorAdapter(
+        appExecutors: AppExecutors,
+        private val callback: ((Contributor) -> Unit)?
 ) : DataBoundListAdapter<Contributor, ContributorItemBinding>(
         appExecutors = appExecutors,
         diffCallback = object : DiffUtil.ItemCallback<Contributor>() {
@@ -19,8 +21,8 @@ class ContributorAdapter(appExecutors: AppExecutors, private val callback: ((Con
             }
 
             override fun areContentsTheSame(oldItem: Contributor, newItem: Contributor): Boolean {
-                return oldItem.avatarUrl == newItem.avatarUrl
-                        && oldItem.contributions == newItem.contributions
+                return oldItem.avatarUrl == newItem.avatarUrl &&
+                        oldItem.contributions == newItem.contributions
             }
         }
 ) {

@@ -30,7 +30,7 @@ open class Event<out T>(private val content: T) {
  * Usage (Note: Use this EventObserver to remove some repetitive code if you end up having lots of events)
  */
 
-//class ListViewModel : ViewModel {
+// class ListViewModel : ViewModel {
 //    private val _navigateToDetails = MutableLiveData<Event<String>>()
 //
 //    val navigateToDetails : LiveData<Event<String>>
@@ -40,10 +40,10 @@ open class Event<out T>(private val content: T) {
 //    fun userClicksOnButton(itemId: String) {
 //        _navigateToDetails.value = Event(itemId)  // Trigger the event by setting a new Event as a new value
 //    }
-//}
+// }
 
-//myViewModel.navigateToDetails.observe(this, Observer {
+// myViewModel.navigateToDetails.observe(this, Observer {
 //    it.getContentIfNotHandled()?.let { // Only proceed if the event has never been handled
 //        startActivity(DetailsActivity...)
 //    }
-//})
+// })

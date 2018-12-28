@@ -34,10 +34,12 @@ import javax.inject.Singleton
  * Repository - type of this class.
  */
 @Singleton
-class RepoRepositoryImpl @Inject constructor(appExecutors: AppExecutors,
-                                             githubDb: GithubDb,
-                                             githubService: GithubService,
-                                             private val repoDao: RepoDao)
+class RepoRepositoryImpl @Inject constructor(
+        appExecutors: AppExecutors,
+        githubDb: GithubDb,
+        githubService: GithubService,
+        private val repoDao: RepoDao
+)
     : BaseRepositoryImpl(appExecutors, githubDb, githubService), RepoRepository {
 
     private val repoListRateLimit = RateLimiter<String>(10, TimeUnit.MINUTES)
@@ -56,7 +58,6 @@ class RepoRepositoryImpl @Inject constructor(appExecutors: AppExecutors,
             override fun loadFromDb() = repoDao.loadRepositories(owner).map { it -> it.map { repoEntity -> repoEntity.toRepo() } }
 
             override fun createCall() = githubService.getRepos(owner)
-
         }.asFlowable()
     }
 
@@ -71,7 +72,6 @@ class RepoRepositoryImpl @Inject constructor(appExecutors: AppExecutors,
             override fun loadFromDb() = repoDao.load(ownerLogin = owner, name = name).map { it -> it.map { repoEntity -> repoEntity.toRepo() } }
 
             override fun createCall() = githubService.getRepo(owner = owner, name = name)
-
         }.asFlowable()
     }
 
@@ -102,12 +102,10 @@ class RepoRepositoryImpl @Inject constructor(appExecutors: AppExecutors,
             override fun shouldFetch(result: List<Contributor>?) =
                     result == null || result.isEmpty() || contributorListRateLimit.shouldFetch("$owner/$name")
 
-
             override fun loadFromDb() = repoDao.loadContributors(owner, name)
                     .map { it -> it.map { contributorEntity -> contributorEntity.toContributor() } }
 
             override fun createCall() = githubService.getContributors(owner, name)
-
         }.asFlowable()
     }
 

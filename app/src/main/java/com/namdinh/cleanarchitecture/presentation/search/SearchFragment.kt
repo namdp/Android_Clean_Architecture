@@ -53,7 +53,7 @@ class SearchFragment : BaseFragment<SearchFragmentBinding, SearchViewModel>() {
             }
         })
         viewModel.repositories.observe(this, Observer { resource ->
-            binding.searchResource = resource //binding loading(error) state
+            binding.searchResource = resource // binding loading(error) state
             when (resource) {
                 is Resource.Loading -> {
                     // loading state was handled by DataBinding

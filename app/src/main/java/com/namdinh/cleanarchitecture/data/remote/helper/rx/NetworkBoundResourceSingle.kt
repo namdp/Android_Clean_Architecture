@@ -56,7 +56,7 @@ abstract class NetworkBoundResourceSingle<ResultType, RequestType>() {
         result = diskObservable
                 .onErrorResumeNext { throwable ->
                     when (throwable) {
-                        //When there is no data in the Room database and the query returns no rows,
+                        // When there is no data in the Room database and the query returns no rows,
                         // Single will trigger onError(EmptyResultSetException.class)
                         // -> return null to downstream and continue fetch data from network
                         is EmptyResultSetException -> null
