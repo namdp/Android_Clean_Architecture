@@ -51,6 +51,8 @@ versions.uber_autodispose = "0.4.0"
 
 versions.timber = "4.5.1"
 
+versions.ktlint = "0.29.0"
+versions.detekt = "1.0.0-RC12"
 
 def deps = [:]
 deps.android_gradle_plugin = "com.android.tools.build:gradle:$versions.android_gradle_plugin"
@@ -138,5 +140,10 @@ rx.uber_autodispose = "com.uber.autodispose:autodispose-android-archcomponents:$
 deps.rx = rx
 
 deps.timber = "com.jakewharton.timber:timber:$versions.timber"
+
+deps.ktlint = "com.github.shyiko:ktlint:$versions.ktlint"
+deps.detekt = "io.gitlab.arturbosch.detekt:detekt-gradle-plugin:$versions.detekt"
+deps.detekt_formatting = "io.gitlab.arturbosch.detekt:detekt-formatting:$versions.detekt"
+
 ext.deps = deps
 

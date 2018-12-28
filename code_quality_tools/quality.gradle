@@ -1,15 +1,29 @@
 apply plugin: 'checkstyle'
 apply plugin: 'findbugs'
 apply plugin: 'pmd'
+apply plugin: "io.gitlab.arturbosch.detekt"
+
+// kotlin-gradle-plugin must be applied for configuration below to work
+// (see https://kotlinlang.org/docs/reference/using-gradle.html)
+configurations {
+    ktlint
+    detektFormatting
+}
+
+dependencies {
+    ktlint deps.ktlint
+    detektFormatting deps.detekt_formatting
+}
 
 def qualityConfigDir = "$project.rootDir/code_quality_tools"
+def projectDir = "$project.rootDir"
 def reportsDir = "$project.buildDir/reports"
 
 task checkstyle(type: Checkstyle) {
     description 'Check code standard'
     group 'verification'
     configFile file("$qualityConfigDir/rules-checkstyle.xml")
-    source fileTree("$project.rootDir/app/src/main/java")
+    source fileTree("$projectDir/app/src/main/java")
     include '**/*.java'
     exclude '**/gen/**'
 
@@ -29,8 +43,8 @@ task findbugs(type: FindBugs) {
     description 'Find bugs mainly design flaws, bad practices, multithreaded correctness and code vulnerabilities.'
     group 'verification'
     excludeFilter = file("$qualityConfigDir/rules-findbugs.xml")
-    classes = fileTree("$project.rootDir/app/build/intermediates/classes")
-    source = fileTree("$project.rootDir/app/src/main/java")
+    classes = fileTree("$projectDir/app/build/intermediates/classes")
+    source = fileTree("$projectDir/app/src/main/java")
     effort 'max'
     reportLevel = "high"
 
@@ -48,8 +62,8 @@ task findbugs(type: FindBugs) {
 task pmd(type: Pmd) {
     description 'Identifying potential problems mainly dead code, duplicated code, cyclomatic complexity and overcomplicated expressions'
     group 'verification'
-    ruleSetFiles = files("$project.rootDir/code_quality_tools/rules-pmd.xml")
-    source = fileTree("$project.rootDir/app/src/main/java")
+    ruleSetFiles = files("$projectDir/code_quality_tools/rules-pmd.xml")
+    source = fileTree("$projectDir/app/src/main/java")
     include '**/*.java'
     exclude '**/gen/**'
     ignoreFailures true
@@ -62,5 +76,43 @@ task pmd(type: Pmd) {
         html.enabled = true
         xml.destination file("$reportsDir/pmd/pmd.xml")
         html.destination file("$reportsDir/pmd/pmd.html")
+    }
+}
+
+task ktlint(type: JavaExec, group: "verification") {
+    description = "Check Kotlin code style."
+    classpath = configurations.ktlint
+    main = "com.github.shyiko.ktlint.Main"
+    args "$projectDir/app/src/**/*.kt"
+    // to generate report in checkstyle format prepend following args:
+    // "--reporter=plain", "--reporter=checkstyle,output=${buildDir}/ktlint.xml"
+    // see https://github.com/shyiko/ktlint#usage for more
+    args "--reporter=plain,output=${reportsDir}/ktlint/ktlint.html"
+}
+
+task ktlintFormat(type: JavaExec, group: "formatting") {
+    description = "Fix Kotlin code style deviations."
+    classpath = configurations.ktlint
+    main = "com.github.shyiko.ktlint.Main"
+    args "-F", "$projectDir/app/src/**/*.kt"
+    args "--reporter=plain,output=${reportsDir}/ktlint/ktlint.html"
+}
+
+detekt {
+    input = files("$projectDir/app/src/main/java")
+    config = files("$qualityConfigDir/default-detekt-config.yml")
+    filters = ".*build.*,.*/resources/.*,.*/tmp/.*"
+    //Optional baseline, uncomment & run gradle command detektBaseline to exclude existing issues
+    //baseline = file("detekt-baseline.xml")
+
+    reports {
+        xml {
+            enabled = false
+            destination = file("$reportsDir/detekt/detekt.xml")
+        }
+        html {
+            enabled = true
+            destination = file("$reportsDir/detekt/detekt.html")
+        }
     }
 }

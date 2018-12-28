@@ -5,6 +5,11 @@ buildscript {
     repositories {
         google()
         jcenter()
+
+        //detekt
+        maven {
+            url "https://plugins.gradle.org/m2/"
+        }
     }
     dependencies {
         classpath deps.android_gradle_plugin
@@ -12,6 +17,7 @@ buildscript {
         classpath deps.kotlin.allopen
         classpath deps.navigation.safe_args_plugin
         classpath deps.realm
+        classpath deps.detekt
 
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
