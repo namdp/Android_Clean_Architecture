@@ -16,18 +16,18 @@ class RepoViewModel @Inject constructor(repository: RepoRepository) : BaseViewMo
     private val repoId: MutableLiveData<RepoId> = MutableLiveData()
 
     val repo: LiveData<Resource<List<Repo>>> = Transformations
-            .switchMap(repoId) { input ->
-                input.ifExists { owner, name ->
-                    LiveDataReactiveStreams.fromPublisher(repository.loadRepo(owner, name))
-                }
+        .switchMap(repoId) { input ->
+            input.ifExists { owner, name ->
+                LiveDataReactiveStreams.fromPublisher(repository.loadRepo(owner, name))
             }
+        }
 
     val contributors: LiveData<Resource<List<Contributor>>> = Transformations
-            .switchMap(repoId) { input ->
-                input.ifExists { owner, name ->
-                    LiveDataReactiveStreams.fromPublisher(repository.loadContributors(owner, name))
-                }
+        .switchMap(repoId) { input ->
+            input.ifExists { owner, name ->
+                LiveDataReactiveStreams.fromPublisher(repository.loadContributors(owner, name))
             }
+        }
 
     fun retry() {
         val owner = repoId.value?.owner

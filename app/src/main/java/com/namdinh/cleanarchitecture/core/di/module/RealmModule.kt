@@ -38,16 +38,16 @@ class RealmModule(application: Application) {
     @Provides
     @Singleton
     internal fun provideRealmConfiguration(
-            @Named("realm_name") realmName: String,
-            @Named("realm_schema_version") realmSchemaVersion: Int,
-            realmModules: RealmModules
+        @Named("realm_name") realmName: String,
+        @Named("realm_schema_version") realmSchemaVersion: Int,
+        realmModules: RealmModules
     ): RealmConfiguration {
         return RealmConfiguration.Builder()
-                .name(realmName)
-                .schemaVersion(realmSchemaVersion.toLong())
-                .modules(realmModules)
-                .deleteRealmIfMigrationNeeded()
-                .build()
+            .name(realmName)
+            .schemaVersion(realmSchemaVersion.toLong())
+            .modules(realmModules)
+            .deleteRealmIfMigrationNeeded()
+            .build()
     }
 
     @Provides

@@ -22,8 +22,8 @@ sealed class ApiResponse<T> {
                     ApiEmptyResponse()
                 } else {
                     ApiSuccessResponse(
-                            body = body,
-                            linkHeader = response.headers()?.get("link")
+                        body = body,
+                        linkHeader = response.headers()?.get("link")
                     )
                 }
             } else {
@@ -46,8 +46,8 @@ class ApiEmptyResponse<T> : ApiResponse<T>()
 
 data class ApiSuccessResponse<T>(val body: T, val links: Map<String, String>) : ApiResponse<T>() {
     constructor(body: T, linkHeader: String?) : this(
-            body = body,
-            links = linkHeader?.extractLinks() ?: emptyMap()
+        body = body,
+        links = linkHeader?.extractLinks() ?: emptyMap()
     )
 
     val nextPage: Int? by lazy(LazyThreadSafetyMode.NONE) {

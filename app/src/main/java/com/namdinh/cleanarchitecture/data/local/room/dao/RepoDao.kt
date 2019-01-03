@@ -34,7 +34,7 @@ abstract class RepoDao {
     abstract fun load(ownerLogin: String, name: String): Flowable<List<RepoEntity>>
 
     @Query(
-            """
+        """
         SELECT login, avatarUrl, repoName, repoOwner, contributions FROM contributorEntity
         WHERE repoName = :name AND repoOwner = :owner
         ORDER BY contributions DESC"""
@@ -42,7 +42,7 @@ abstract class RepoDao {
     abstract fun loadContributors(owner: String, name: String): Flowable<List<ContributorEntity>>
 
     @Query(
-            """
+        """
         SELECT * FROM RepoEntity
         WHERE owner_login = :owner
         ORDER BY stars DESC"""

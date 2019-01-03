@@ -62,11 +62,11 @@ class NetworkModule {
     @Singleton
     internal fun provideCachedOkHttpClient(loggingInterceptor: HttpLoggingInterceptor, cache: Cache): OkHttpClient {
         return OkHttpClient.Builder()
-                .cache(cache)
-                .addInterceptor(loggingInterceptor)
-                .readTimeout(30, TimeUnit.SECONDS)
-                .connectTimeout(30, TimeUnit.SECONDS)
-                .build()
+            .cache(cache)
+            .addInterceptor(loggingInterceptor)
+            .readTimeout(30, TimeUnit.SECONDS)
+            .connectTimeout(30, TimeUnit.SECONDS)
+            .build()
     }
 
     @Provides
@@ -74,27 +74,27 @@ class NetworkModule {
     @Singleton
     internal fun provideOkHttpClient(loggingInterceptor: HttpLoggingInterceptor): OkHttpClient {
         return OkHttpClient.Builder()
-                .addInterceptor(loggingInterceptor)
-                .readTimeout(30, TimeUnit.SECONDS)
-                .connectTimeout(30, TimeUnit.SECONDS)
-                .build()
+            .addInterceptor(loggingInterceptor)
+            .readTimeout(30, TimeUnit.SECONDS)
+            .connectTimeout(30, TimeUnit.SECONDS)
+            .build()
     }
 
     @Provides
     @Singleton
     internal fun provideRetrofit(
-            @ServerAddress serverAddress: String,
-            gson: Gson,
-            liveDataCallAdapterFactory: LiveDataCallAdapterFactory,
-            @Named("non_cached") okHttpClient: OkHttpClient
+        @ServerAddress serverAddress: String,
+        gson: Gson,
+        liveDataCallAdapterFactory: LiveDataCallAdapterFactory,
+        @Named("non_cached") okHttpClient: OkHttpClient
     ): Retrofit {
         return Retrofit.Builder()
-                .addConverterFactory(GsonConverterFactory.create(gson))
-                .addCallAdapterFactory(liveDataCallAdapterFactory)
-                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-                .baseUrl(serverAddress)
-                .client(okHttpClient)
-                .build()
+            .addConverterFactory(GsonConverterFactory.create(gson))
+            .addCallAdapterFactory(liveDataCallAdapterFactory)
+            .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+            .baseUrl(serverAddress)
+            .client(okHttpClient)
+            .build()
     }
 
     @Provides

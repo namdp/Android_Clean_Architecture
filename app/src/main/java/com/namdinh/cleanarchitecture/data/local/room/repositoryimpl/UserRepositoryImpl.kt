@@ -18,12 +18,11 @@ import javax.inject.Singleton
 
 @Singleton
 class UserRepositoryImpl @Inject constructor(
-        appExecutors: AppExecutors,
-        githubDb: GithubDb,
-        githubService: GithubService,
-        private val userDao: UserDao
-)
-    : BaseRepositoryImpl(appExecutors, githubDb, githubService), UserRepository {
+    appExecutors: AppExecutors,
+    githubDb: GithubDb,
+    githubService: GithubService,
+    private val userDao: UserDao
+) : BaseRepositoryImpl(appExecutors, githubDb, githubService), UserRepository {
 
     private val userRateLimit = RateLimiter<String>(10, TimeUnit.MINUTES)
 

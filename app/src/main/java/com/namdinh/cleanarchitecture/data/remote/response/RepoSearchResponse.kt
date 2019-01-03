@@ -9,11 +9,11 @@ import com.namdinh.cleanarchitecture.data.local.room.entity.RepoEntity
  * column.
  */
 data class RepoSearchResponse(
-        @SerializedName("total_count")
-        val total: Int = 0,
+    @SerializedName("total_count")
+    val total: Int = 0,
 
-        @SerializedName("items")
-        val items: List<RepoEntity>
+    @SerializedName("items")
+    val items: List<RepoEntity>
 ) {
     var nextPage: Int? = null
 }

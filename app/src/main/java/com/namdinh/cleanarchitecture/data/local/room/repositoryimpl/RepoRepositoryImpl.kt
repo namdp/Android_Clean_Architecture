@@ -35,12 +35,11 @@ import javax.inject.Singleton
  */
 @Singleton
 class RepoRepositoryImpl @Inject constructor(
-        appExecutors: AppExecutors,
-        githubDb: GithubDb,
-        githubService: GithubService,
-        private val repoDao: RepoDao
-)
-    : BaseRepositoryImpl(appExecutors, githubDb, githubService), RepoRepository {
+    appExecutors: AppExecutors,
+    githubDb: GithubDb,
+    githubService: GithubService,
+    private val repoDao: RepoDao
+) : BaseRepositoryImpl(appExecutors, githubDb, githubService), RepoRepository {
 
     private val repoListRateLimit = RateLimiter<String>(10, TimeUnit.MINUTES)
     private val repoRateLimit = RateLimiter<String>(10, TimeUnit.MINUTES)
@@ -86,24 +85,24 @@ class RepoRepositoryImpl @Inject constructor(
                 }
                 githubDb.runInTransaction {
                     repoDao.createRepoIfNotExists(
-                            RepoEntity(
-                                    id = RepoEntity.UNKNOWN_ID,
-                                    name = name,
-                                    fullName = "$owner/$name",
-                                    description = "",
-                                    ownerEntity = RepoEntity.OwnerEntity(owner, null),
-                                    stars = 0
-                            )
+                        RepoEntity(
+                            id = RepoEntity.UNKNOWN_ID,
+                            name = name,
+                            fullName = "$owner/$name",
+                            description = "",
+                            ownerEntity = RepoEntity.OwnerEntity(owner, null),
+                            stars = 0
+                        )
                     )
                     repoDao.insertContributors(request)
                 }
             }
 
             override fun shouldFetch(result: List<Contributor>?) =
-                    result == null || result.isEmpty() || contributorListRateLimit.shouldFetch("$owner/$name")
+                result == null || result.isEmpty() || contributorListRateLimit.shouldFetch("$owner/$name")
 
             override fun loadFromDb() = repoDao.loadContributors(owner, name)
-                    .map { it -> it.map { contributorEntity -> contributorEntity.toContributor() } }
+                .map { it -> it.map { contributorEntity -> contributorEntity.toContributor() } }
 
             override fun createCall() = githubService.getContributors(owner, name)
         }.asFlowable()
@@ -116,10 +115,10 @@ class RepoRepositoryImpl @Inject constructor(
             override fun saveCallResult(request: RepoSearchResponse) {
                 val repoIds = request.items.map { it.id }
                 val repoSearchResult = RepoSearchResultEntity(
-                        query = query,
-                        repoIds = repoIds,
-                        totalCount = request.total,
-                        next = request.nextPage
+                    query = query,
+                    repoIds = repoIds,
+                    totalCount = request.total,
+                    next = request.nextPage
                 )
                 githubDb.runInTransaction {
                     repoDao.insertRepos(request.items)
@@ -130,19 +129,19 @@ class RepoRepositoryImpl @Inject constructor(
             override fun shouldFetch(result: List<Repo>?) = result == null || result.isEmpty() || searchListRateLimit.shouldFetch(query)
 
             override fun loadFromDb(): Flowable<List<Repo>> =
-                    repoDao.search(query).switchMap {
-                        if (it.isNotEmpty()) {
-                            repoDao.loadOrdered(it[0].repoIds)
-                        } else {
-                            Flowable.just(Collections.emptyList())
-                        }
-                    }.map {
-                        if (it.isNotEmpty()) {
-                            it.map { repoEntity -> repoEntity.toRepo() }
-                        } else {
-                            Collections.emptyList()
-                        }
+                repoDao.search(query).switchMap {
+                    if (it.isNotEmpty()) {
+                        repoDao.loadOrdered(it[0].repoIds)
+                    } else {
+                        Flowable.just(Collections.emptyList())
                     }
+                }.map {
+                    if (it.isNotEmpty()) {
+                        it.map { repoEntity -> repoEntity.toRepo() }
+                    } else {
+                        Collections.emptyList()
+                    }
+                }
 
             override fun createCall() = githubService.searchRepos(query)
 
@@ -157,19 +156,19 @@ class RepoRepositoryImpl @Inject constructor(
     override fun searchNextPage(query: String): Single<Resource<Boolean>> {
         return Single.defer {
             repoDao.findSearchResult(query)
-                    // Read from disk on Computation Scheduler
-                    .subscribeOn(Schedulers.computation())
-                    .flatMap<Resource<Boolean>> {
-                        if (it.isNotEmpty()) {
-                            val current = it[0]
-                            searchNextPageRemote(query, current)
-                        } else {
-                            Single.just(Resource.Success(false))
-                        }
+                // Read from disk on Computation Scheduler
+                .subscribeOn(Schedulers.computation())
+                .flatMap<Resource<Boolean>> {
+                    if (it.isNotEmpty()) {
+                        val current = it[0]
+                        searchNextPageRemote(query, current)
+                    } else {
+                        Single.just(Resource.Success(false))
                     }
-                    .onErrorReturn { Resource.Failure(it.toAppFailure()) }
-                    // Read results in Android Main Thread (UI)
-                    .observeOn(AndroidSchedulers.mainThread())
+                }
+                .onErrorReturn { Resource.Failure(it.toAppFailure()) }
+                // Read results in Android Main Thread (UI)
+                .observeOn(AndroidSchedulers.mainThread())
         }
     }
 
@@ -178,23 +177,23 @@ class RepoRepositoryImpl @Inject constructor(
             val nextPage = current.next
             if (nextPage != null) {
                 githubService.searchRepos(query, nextPage)
-                        // Request API on IO Scheduler
-                        .subscribeOn(Schedulers.io())
-                        // Read/Write to disk on Computation Scheduler
-                        .observeOn(Schedulers.computation())
-                        .map {
-                            val response = ApiResponse.create(it)
-                            when (response) {
-                                is ApiSuccessResponse -> {
-                                    val body = response.body
-                                    body.nextPage = response.nextPage
-                                    saveSearchNextPageResult(query, current, response.body)
-                                    Resource.Success(true)
-                                }
-                                is ApiEmptyResponse -> Resource.Success(false)
-                                is ApiErrorResponse -> throw response.throwable
+                    // Request API on IO Scheduler
+                    .subscribeOn(Schedulers.io())
+                    // Read/Write to disk on Computation Scheduler
+                    .observeOn(Schedulers.computation())
+                    .map {
+                        val response = ApiResponse.create(it)
+                        when (response) {
+                            is ApiSuccessResponse -> {
+                                val body = response.body
+                                body.nextPage = response.nextPage
+                                saveSearchNextPageResult(query, current, response.body)
+                                Resource.Success(true)
                             }
+                            is ApiEmptyResponse -> Resource.Success(false)
+                            is ApiErrorResponse -> throw response.throwable
                         }
+                    }
             } else {
                 Single.just(Resource.Success(false))
             }
@@ -206,10 +205,10 @@ class RepoRepositoryImpl @Inject constructor(
         ids.addAll(current.repoIds)
         ids.addAll(body.items.map { it.id })
         val merged = RepoSearchResultEntity(
-                query = query,
-                repoIds = ids,
-                totalCount = body.total,
-                next = body.nextPage
+            query = query,
+            repoIds = ids,
+            totalCount = body.total,
+            next = body.nextPage
         )
 
         githubDb.runInTransaction {

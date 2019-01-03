@@ -23,8 +23,8 @@ import dagger.android.support.HasSupportFragmentInjector
 object AppInjector {
     fun init(cleanArchitectureApp: CleanArchitectureApp) {
         val appComponent = DaggerAppComponent.builder().application(application = cleanArchitectureApp)
-                .serverAddress(serverAddress = BuildConfig.SERVER_ADDRESS)
-                .realmModule(RealmModule(application = cleanArchitectureApp)).build()
+            .serverAddress(serverAddress = BuildConfig.SERVER_ADDRESS)
+            .realmModule(RealmModule(application = cleanArchitectureApp)).build()
         appComponent.inject(cleanArchitectureApp)
 
         // data binding
@@ -32,29 +32,29 @@ object AppInjector {
         DataBindingUtil.setDefaultComponent(bindingComponent)
 
         cleanArchitectureApp
-                .registerActivityLifecycleCallbacks(object : Application.ActivityLifecycleCallbacks {
-                    override fun onActivityCreated(activity: Activity, savedInstanceState: Bundle?) {
-                        handleActivity(activity)
-                    }
+            .registerActivityLifecycleCallbacks(object : Application.ActivityLifecycleCallbacks {
+                override fun onActivityCreated(activity: Activity, savedInstanceState: Bundle?) {
+                    handleActivity(activity)
+                }
 
-                    override fun onActivityStarted(activity: Activity) {
-                    }
+                override fun onActivityStarted(activity: Activity) {
+                }
 
-                    override fun onActivityResumed(activity: Activity) {
-                    }
+                override fun onActivityResumed(activity: Activity) {
+                }
 
-                    override fun onActivityPaused(activity: Activity) {
-                    }
+                override fun onActivityPaused(activity: Activity) {
+                }
 
-                    override fun onActivityStopped(activity: Activity) {
-                    }
+                override fun onActivityStopped(activity: Activity) {
+                }
 
-                    override fun onActivitySaveInstanceState(activity: Activity, outState: Bundle?) {
-                    }
+                override fun onActivitySaveInstanceState(activity: Activity, outState: Bundle?) {
+                }
 
-                    override fun onActivityDestroyed(activity: Activity) {
-                    }
-                })
+                override fun onActivityDestroyed(activity: Activity) {
+                }
+            })
     }
 
     private fun handleActivity(activity: Activity) {
@@ -63,19 +63,19 @@ object AppInjector {
         }
         if (activity is FragmentActivity) {
             activity.supportFragmentManager
-                    .registerFragmentLifecycleCallbacks(
-                            object : FragmentManager.FragmentLifecycleCallbacks() {
-                                override fun onFragmentCreated(
-                                        fm: FragmentManager,
-                                        f: Fragment,
-                                        savedInstanceState: Bundle?
-                                ) {
-                                    if (f is Injectable) {
-                                        AndroidSupportInjection.inject(f)
-                                    }
-                                }
-                            }, true
-                    )
+                .registerFragmentLifecycleCallbacks(
+                    object : FragmentManager.FragmentLifecycleCallbacks() {
+                        override fun onFragmentCreated(
+                            fm: FragmentManager,
+                            f: Fragment,
+                            savedInstanceState: Bundle?
+                        ) {
+                            if (f is Injectable) {
+                                AndroidSupportInjection.inject(f)
+                            }
+                        }
+                    }, true
+                )
         }
     }
 }

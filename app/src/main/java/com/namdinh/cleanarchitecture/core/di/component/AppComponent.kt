@@ -17,15 +17,15 @@ import javax.inject.Singleton
 
 @Singleton
 @Component(
-        modules = [
-            AndroidInjectionModule::class,
-            AppModule::class,
-            NetworkModule::class,
-            RoomModule::class,
-            RealmModule::class,
-            RepositoryBuildersModule::class,
-            ActivityBuildersModule::class,
-            FragmentBuildersModule::class]
+    modules = [
+        AndroidInjectionModule::class,
+        AppModule::class,
+        NetworkModule::class,
+        RoomModule::class,
+        RealmModule::class,
+        RepositoryBuildersModule::class,
+        ActivityBuildersModule::class,
+        FragmentBuildersModule::class]
 )
 interface AppComponent {
 

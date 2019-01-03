@@ -23,9 +23,9 @@ class RoomModule {
     @Singleton
     fun provideDb(app: Application, @Named("room_name") roomName: String): GithubDb {
         return Room
-                .databaseBuilder(app, GithubDb::class.java, roomName)
-                .fallbackToDestructiveMigration()
-                .build()
+            .databaseBuilder(app, GithubDb::class.java, roomName)
+            .fallbackToDestructiveMigration()
+            .build()
     }
 
     @Provides

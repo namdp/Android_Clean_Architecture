@@ -26,7 +26,7 @@ class UserFragment : BaseFragment<UserFragmentBinding, UserViewModel>() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProviders.of(this, viewModelFactory)
-                .get(UserViewModel::class.java)
+            .get(UserViewModel::class.java)
         val params = UserFragmentArgs.fromBundle(arguments)
         viewModel.setLogin(params.login)
 

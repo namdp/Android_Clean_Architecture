@@ -30,46 +30,46 @@ abstract class NetworkBoundResourceFlowable<ResultType, RequestType>() {
         // Lazy disk observable.
         val diskObservable = Flowable.defer {
             loadFromDb()
-                    // Read from disk on Computation Scheduler
-                    .subscribeOn(Schedulers.computation())
+                // Read from disk on Computation Scheduler
+                .subscribeOn(Schedulers.computation())
         }
 
         // Lazy network observable.
         val networkObservable = Flowable.defer {
             createCall()
-                    // Request API on IO Scheduler
-                    .subscribeOn(Schedulers.io())
-                    // Read/Write to disk on Computation Scheduler
-                    .observeOn(Schedulers.computation())
-                    .map {
-                        val response = ApiResponse.create(it)
-                        when (response) {
-                            is ApiSuccessResponse -> saveCallResult(processResponse(response))
-                            is ApiErrorResponse -> throw response.throwable
-                            is ApiEmptyResponse -> Timber.d("ApiEmptyResponse")
-                        }
+                // Request API on IO Scheduler
+                .subscribeOn(Schedulers.io())
+                // Read/Write to disk on Computation Scheduler
+                .observeOn(Schedulers.computation())
+                .map {
+                    val response = ApiResponse.create(it)
+                    when (response) {
+                        is ApiSuccessResponse -> saveCallResult(processResponse(response))
+                        is ApiErrorResponse -> throw response.throwable
+                        is ApiEmptyResponse -> Timber.d("ApiEmptyResponse")
                     }
-                    .flatMap { loadFromDb() }
+                }
+                .flatMap { loadFromDb() }
         }
 
         // When there is no data in the Room database and the query returns no rows,
         // the Flowable will not emit, neither onNext, nor onError
         // -> ResultType must wrapped by List to get at least we’ll get an empty list instead of complete silence.
         result = diskObservable
-                .flatMap<Resource<ResultType>> { resultData ->
-                    if (shouldFetch(resultData)) {
-                        networkObservable.map<Resource<ResultType>> { Resource.Success(it) }
-                    } else {
-                        Flowable.just(Resource.Success(resultData))
-                    }
+            .flatMap<Resource<ResultType>> { resultData ->
+                if (shouldFetch(resultData)) {
+                    networkObservable.map<Resource<ResultType>> { Resource.Success(it) }
+                } else {
+                    Flowable.just(Resource.Success(resultData))
                 }
-                .onErrorReturn {
-                    onFetchFailed()
-                    Resource.Failure(it.toAppFailure())
-                }
-                .startWith(Resource.Loading())
-                // Read results in Android Main Thread (UI)
-                .observeOn(AndroidSchedulers.mainThread())
+            }
+            .onErrorReturn {
+                onFetchFailed()
+                Resource.Failure(it.toAppFailure())
+            }
+            .startWith(Resource.Loading())
+            // Read results in Android Main Thread (UI)
+            .observeOn(AndroidSchedulers.mainThread())
     }
 
     fun asFlowable(): Flowable<Resource<ResultType>> {

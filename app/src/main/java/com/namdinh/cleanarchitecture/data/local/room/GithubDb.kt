@@ -13,13 +13,13 @@ import com.namdinh.cleanarchitecture.data.local.room.entity.UserEntity
  * Main database description.
  */
 @Database(
-        entities = [
-            UserEntity::class,
-            RepoEntity::class,
-            ContributorEntity::class,
-            RepoSearchResultEntity::class],
-        version = 3,
-        exportSchema = false
+    entities = [
+        UserEntity::class,
+        RepoEntity::class,
+        ContributorEntity::class,
+        RepoSearchResultEntity::class],
+    version = 3,
+    exportSchema = false
 )
 abstract class GithubDb : RoomDatabase() {
 

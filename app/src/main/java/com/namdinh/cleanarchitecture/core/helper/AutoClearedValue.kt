@@ -42,7 +42,7 @@ class AutoClearedValue<T : Any>(fragment: Fragment) : ReadWriteProperty<Fragment
 
     override fun getValue(thisRef: Fragment, property: KProperty<*>): T {
         return _value ?: throw IllegalStateException(
-                "should never call auto-cleared-value get when it might not be available"
+            "should never call auto-cleared-value get when it might not be available"
         )
     }
 

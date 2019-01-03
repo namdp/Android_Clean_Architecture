@@ -7,8 +7,8 @@ import com.namdinh.cleanarchitecture.data.local.room.converter.RepoSearchTypeCon
 @Entity(primaryKeys = ["query"])
 @TypeConverters(RepoSearchTypeConverters::class)
 data class RepoSearchResultEntity(
-        val query: String,
-        val repoIds: List<Int>,
-        val totalCount: Int,
-        val next: Int?
+    val query: String,
+    val repoIds: List<Int>,
+    val totalCount: Int,
+    val next: Int?
 )

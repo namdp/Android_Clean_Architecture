@@ -16,21 +16,21 @@ import java.util.*
 import javax.inject.Inject
 
 class SearchViewModel @Inject constructor(
-        private val searchRepositories: SearchRepositories,
-        private val searchNextRepositories: SearchNextRepositories
+    private val searchRepositories: SearchRepositories,
+    private val searchNextRepositories: SearchNextRepositories
 ) : BaseViewModel() {
 
     private val query = MutableLiveData<String>()
 
     val repositories: LiveData<Resource<List<Repo>>> = Transformations
-            .switchMap(query) { it ->
-                if (it.isNullOrBlank()) {
-                    AbsentLiveData.create()
-                } else {
-                    LiveDataReactiveStreams.fromPublisher(
-                            searchRepositories.execute(SearchRepositories.Params(query = it)))
-                }
+        .switchMap(query) { it ->
+            if (it.isNullOrBlank()) {
+                AbsentLiveData.create()
+            } else {
+                LiveDataReactiveStreams.fromPublisher(
+                    searchRepositories.execute(SearchRepositories.Params(query = it)))
             }
+        }
 
     val loadMoreStatus: MutableLiveData<Resource<Boolean>> = MutableLiveData()
 
@@ -38,7 +38,7 @@ class SearchViewModel @Inject constructor(
         query.value?.let { it ->
             if (it.isNotBlank()) {
                 SingleConsumers.subscribeAutoDispose(searchNextRepositories.execute(SearchNextRepositories.Params(it))
-                        .doOnSubscribe { loadMoreStatus.value = Resource.Loading() }, disposables, { status -> loadMoreStatus.value = status }, { throwable -> loadMoreStatus.value = Resource.Failure(throwable.toAppFailure()) })
+                    .doOnSubscribe { loadMoreStatus.value = Resource.Loading() }, disposables, { status -> loadMoreStatus.value = status }, { throwable -> loadMoreStatus.value = Resource.Failure(throwable.toAppFailure()) })
             }
         }
     }

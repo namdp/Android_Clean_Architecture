@@ -18,22 +18,22 @@ class UserViewModel
     private val login = MutableLiveData<String>()
 
     val repositories: LiveData<Resource<List<Repo>>> = Transformations
-            .switchMap(login) { login ->
-                if (login == null) {
-                    AbsentLiveData.create()
-                } else {
-                    LiveDataReactiveStreams.fromPublisher(repoRepository.loadRepos(login))
-                }
+        .switchMap(login) { login ->
+            if (login == null) {
+                AbsentLiveData.create()
+            } else {
+                LiveDataReactiveStreams.fromPublisher(repoRepository.loadRepos(login))
             }
+        }
 
     val user: LiveData<Resource<List<User>>> = Transformations
-            .switchMap(login) { login ->
-                if (login == null) {
-                    AbsentLiveData.create()
-                } else {
-                    LiveDataReactiveStreams.fromPublisher(userRepository.loadUser(login))
-                }
+        .switchMap(login) { login ->
+            if (login == null) {
+                AbsentLiveData.create()
+            } else {
+                LiveDataReactiveStreams.fromPublisher(userRepository.loadUser(login))
             }
+        }
 
     fun setLogin(login: String?) {
         if (this.login.value != login) {

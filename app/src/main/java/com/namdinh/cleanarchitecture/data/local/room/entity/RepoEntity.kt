@@ -11,24 +11,24 @@ import com.namdinh.cleanarchitecture.domain.vo.Repo
  * vs id is not.
  */
 @Entity(
-        indices = [
-            Index("id"),
-            Index("owner_login")],
-        primaryKeys = ["name", "owner_login"]
+    indices = [
+        Index("id"),
+        Index("owner_login")],
+    primaryKeys = ["name", "owner_login"]
 )
 data class RepoEntity(
-        val id: Int,
-        @field:SerializedName("name")
-        val name: String,
-        @field:SerializedName("full_name")
-        val fullName: String,
-        @field:SerializedName("description")
-        val description: String?,
-        @field:SerializedName("owner")
-        @field:Embedded(prefix = "owner_")
-        val ownerEntity: OwnerEntity,
-        @field:SerializedName("stargazers_count")
-        val stars: Int
+    val id: Int,
+    @field:SerializedName("name")
+    val name: String,
+    @field:SerializedName("full_name")
+    val fullName: String,
+    @field:SerializedName("description")
+    val description: String?,
+    @field:SerializedName("owner")
+    @field:Embedded(prefix = "owner_")
+    val ownerEntity: OwnerEntity,
+    @field:SerializedName("stargazers_count")
+    val stars: Int
 ) {
 
     companion object {
@@ -36,10 +36,10 @@ data class RepoEntity(
     }
 
     data class OwnerEntity(
-            @field:SerializedName("login")
-            val login: String,
-            @field:SerializedName("url")
-            val url: String?
+        @field:SerializedName("login")
+        val login: String,
+        @field:SerializedName("url")
+        val url: String?
     ) {
         fun toOwner() = Repo.Owner(login, url)
     }

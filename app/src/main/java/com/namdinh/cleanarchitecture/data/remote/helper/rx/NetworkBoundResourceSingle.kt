@@ -31,51 +31,51 @@ abstract class NetworkBoundResourceSingle<ResultType, RequestType>() {
         // Lazy disk observable.
         val diskObservable = Single.defer {
             loadFromDb()
-                    // Read from disk on Computation Scheduler
-                    .subscribeOn(Schedulers.computation())
+                // Read from disk on Computation Scheduler
+                .subscribeOn(Schedulers.computation())
         }
 
         // Lazy network observable.
         val networkObservable = Single.defer {
             createCall()
-                    // Request API on IO Scheduler
-                    .subscribeOn(Schedulers.io())
-                    // Read/Write to disk on Computation Scheduler
-                    .observeOn(Schedulers.computation())
-                    .map {
-                        val response = ApiResponse.create(it)
-                        when (response) {
-                            is ApiSuccessResponse -> saveCallResult(processResponse(response))
-                            is ApiErrorResponse -> throw response.throwable
-                            is ApiEmptyResponse -> Timber.d("ApiEmptyResponse")
-                        }
+                // Request API on IO Scheduler
+                .subscribeOn(Schedulers.io())
+                // Read/Write to disk on Computation Scheduler
+                .observeOn(Schedulers.computation())
+                .map {
+                    val response = ApiResponse.create(it)
+                    when (response) {
+                        is ApiSuccessResponse -> saveCallResult(processResponse(response))
+                        is ApiErrorResponse -> throw response.throwable
+                        is ApiEmptyResponse -> Timber.d("ApiEmptyResponse")
                     }
-                    .flatMap { loadFromDb() }
+                }
+                .flatMap { loadFromDb() }
         }
 
         result = diskObservable
-                .onErrorResumeNext { throwable ->
-                    when (throwable) {
-                        // When there is no data in the Room database and the query returns no rows,
-                        // Single will trigger onError(EmptyResultSetException.class)
-                        // -> return null to downstream and continue fetch data from network
-                        is EmptyResultSetException -> null
-                        else -> throw throwable
-                    }
+            .onErrorResumeNext { throwable ->
+                when (throwable) {
+                    // When there is no data in the Room database and the query returns no rows,
+                    // Single will trigger onError(EmptyResultSetException.class)
+                    // -> return null to downstream and continue fetch data from network
+                    is EmptyResultSetException -> null
+                    else -> throw throwable
                 }
-                .flatMap<Resource<ResultType>> { resultType ->
-                    if (shouldFetch(resultType)) {
-                        networkObservable.map { Resource.Success(it) }
-                    } else {
-                        Single.just(Resource.Success(resultType))
-                    }
+            }
+            .flatMap<Resource<ResultType>> { resultType ->
+                if (shouldFetch(resultType)) {
+                    networkObservable.map { Resource.Success(it) }
+                } else {
+                    Single.just(Resource.Success(resultType))
                 }
-                .onErrorReturn {
-                    onFetchFailed()
-                    Resource.Failure(it.toAppFailure())
-                }
-                // Read results in Android Main Thread (UI)
-                .observeOn(AndroidSchedulers.mainThread())
+            }
+            .onErrorReturn {
+                onFetchFailed()
+                Resource.Failure(it.toAppFailure())
+            }
+            // Read results in Android Main Thread (UI)
+            .observeOn(AndroidSchedulers.mainThread())
     }
 
     fun asSingle(): Single<Resource<ResultType>> {
