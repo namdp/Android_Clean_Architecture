@@ -23,7 +23,7 @@ import io.reactivex.Flowable
 import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
-import java.util.*
+import java.util.* // ktlint-disable no-wildcard-imports
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -41,10 +41,14 @@ class RepoRepositoryImpl @Inject constructor(
     private val repoDao: RepoDao
 ) : BaseRepositoryImpl(appExecutors, githubDb, githubService), RepoRepository {
 
-    private val repoListRateLimit = RateLimiter<String>(10, TimeUnit.MINUTES)
-    private val repoRateLimit = RateLimiter<String>(10, TimeUnit.MINUTES)
-    private val contributorListRateLimit = RateLimiter<String>(10, TimeUnit.MINUTES)
-    private val searchListRateLimit = RateLimiter<String>(10, TimeUnit.MINUTES)
+    companion object {
+        private const val timeout = 30
+    }
+
+    private val repoListRateLimit = RateLimiter<String>(timeout, TimeUnit.MINUTES)
+    private val repoRateLimit = RateLimiter<String>(timeout, TimeUnit.MINUTES)
+    private val contributorListRateLimit = RateLimiter<String>(timeout, TimeUnit.MINUTES)
+    private val searchListRateLimit = RateLimiter<String>(timeout, TimeUnit.MINUTES)
 
     override fun loadRepos(owner: String): Flowable<Resource<List<Repo>>> {
         return object : NetworkBoundResourceFlowable<List<Repo>, List<RepoEntity>>() {

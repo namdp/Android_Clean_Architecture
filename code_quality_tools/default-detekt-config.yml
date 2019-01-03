@@ -107,7 +107,7 @@ complexity:
   TooManyFunctions:
     active: true
     thresholdInFiles: 11
-    thresholdInClasses: 11
+    thresholdInClasses: 15
     thresholdInInterfaces: 11
     thresholdInObjects: 11
     thresholdInEnums: 11
@@ -219,7 +219,7 @@ formatting:
     continuationIndentSize: 4
   MaximumLineLength:
     active: true
-    maxLineLength: 120
+    maxLineLength: 200
   ModifierOrdering:
     active: true
     autoCorrect: true
@@ -233,7 +233,7 @@ formatting:
     active: true
     autoCorrect: true
   NoItParamInMultilineLambda:
-    active: true
+    active: false
   NoLineBreakAfterElse:
     active: true
     autoCorrect: true
@@ -256,8 +256,8 @@ formatting:
     active: true
     autoCorrect: true
   NoWildcardImports:
-    active: true
-    autoCorrect: true
+    active: false
+    autoCorrect: false
   PackageName:
     active: true
     autoCorrect: true
@@ -442,7 +442,7 @@ style:
     active: false
   MaxLineLength:
     active: true
-    maxLineLength: 120
+    maxLineLength: 200
     excludePackageStatements: true
     excludeImportStatements: true
     excludeCommentStatements: false

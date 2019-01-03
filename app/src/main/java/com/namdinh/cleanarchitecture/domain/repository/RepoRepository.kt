@@ -12,13 +12,13 @@ interface RepoRepository {
 
     fun loadRepos(owner: String): Flowable<Resource<List<Repo>>>
 
-    // @todo Room: we wrapped into `List` to get an empty list instead of complete silence if there is no record
+    // TODO Room: we wrapped into `List` to get an empty list instead of complete silence if there is no record
     fun loadRepo(owner: String, name: String): Flowable<Resource<List<Repo>>>
 
     fun loadContributors(owner: String, name: String): Flowable<Resource<List<Contributor>>>
 
     fun search(query: String): Flowable<Resource<List<Repo>>>
 
-    // @todo Room: we wrapped into `List` to get an empty list instead of complete silence if there is no record
+    // TODO Room: we wrapped into `List` to get an empty list instead of complete silence if there is no record
     fun searchNextPage(query: String): Single<Resource<Boolean>>
 }

@@ -23,7 +23,7 @@ import timber.log.Timber
  *
  * - Reference: https://codinginfinite.com/android-room-persistent-rxjava
  */
-abstract class NetworkBoundResourceSingle<ResultType, RequestType>() {
+abstract class NetworkBoundResourceSingle<ResultType, RequestType> {
 
     private val result: Single<Resource<ResultType>>
 

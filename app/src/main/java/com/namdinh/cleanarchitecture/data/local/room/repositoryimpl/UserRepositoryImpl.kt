@@ -24,7 +24,11 @@ class UserRepositoryImpl @Inject constructor(
     private val userDao: UserDao
 ) : BaseRepositoryImpl(appExecutors, githubDb, githubService), UserRepository {
 
-    private val userRateLimit = RateLimiter<String>(10, TimeUnit.MINUTES)
+    companion object {
+        private const val timeout = 30
+    }
+
+    private val userRateLimit = RateLimiter<String>(timeout, TimeUnit.MINUTES)
 
     override fun loadUser(login: String): Flowable<Resource<List<User>>> {
         return object : NetworkBoundResourceFlowable<List<User>, UserEntity>() {

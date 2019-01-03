@@ -1,6 +1,8 @@
 package com.namdinh.cleanarchitecture.data.remote.helper.google
 
-import com.namdinh.cleanarchitecture.data.remote.helper.google.Status.*
+import com.namdinh.cleanarchitecture.data.remote.helper.google.Status.ERROR
+import com.namdinh.cleanarchitecture.data.remote.helper.google.Status.LOADING
+import com.namdinh.cleanarchitecture.data.remote.helper.google.Status.SUCCESS
 
 /**
  * A generic class that holds a value with its loading status.

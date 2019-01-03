@@ -12,7 +12,7 @@ import com.namdinh.cleanarchitecture.domain.usecase.SearchRepositories
 import com.namdinh.cleanarchitecture.domain.vo.Repo
 import com.namdinh.cleanarchitecture.presentation.base.viewmodel.BaseViewModel
 import hu.akarnokd.rxjava2.consumers.SingleConsumers
-import java.util.*
+import java.util.* // ktlint-disable no-wildcard-imports
 import javax.inject.Inject
 
 class SearchViewModel @Inject constructor(
@@ -37,8 +37,14 @@ class SearchViewModel @Inject constructor(
     fun loadNextPage() {
         query.value?.let { it ->
             if (it.isNotBlank()) {
-                SingleConsumers.subscribeAutoDispose(searchNextRepositories.execute(SearchNextRepositories.Params(it))
-                    .doOnSubscribe { loadMoreStatus.value = Resource.Loading() }, disposables, { status -> loadMoreStatus.value = status }, { throwable -> loadMoreStatus.value = Resource.Failure(throwable.toAppFailure()) })
+                SingleConsumers.subscribeAutoDispose(
+                    searchNextRepositories.execute(SearchNextRepositories.Params(it))
+                        .doOnSubscribe {
+                            loadMoreStatus.value = Resource.Loading()
+                        },
+                    disposables,
+                    { status -> loadMoreStatus.value = status },
+                    { throwable -> loadMoreStatus.value = Resource.Failure(throwable.toAppFailure()) })
             }
         }
     }

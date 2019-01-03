@@ -11,6 +11,8 @@ import java.util.regex.Pattern
 @Suppress("unused") // T is used in extending classes
 sealed class ApiResponse<T> {
     companion object {
+        private const val noContentResponseCode = 204
+
         fun <T> create(error: Throwable): ApiErrorResponse<T> {
             return ApiErrorResponse(error)
         }
@@ -18,7 +20,7 @@ sealed class ApiResponse<T> {
         fun <T> create(response: Response<T>): ApiResponse<T> {
             return if (response.isSuccessful) {
                 val body = response.body()
-                if (body == null || response.code() == 204) {
+                if (body == null || response.code() == noContentResponseCode) {
                     ApiEmptyResponse()
                 } else {
                     ApiSuccessResponse(

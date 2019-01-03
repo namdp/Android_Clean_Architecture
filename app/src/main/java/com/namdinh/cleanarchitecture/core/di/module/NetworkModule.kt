@@ -23,6 +23,11 @@ import javax.inject.Singleton
 @Module
 class NetworkModule {
 
+    companion object {
+        private const val maxCacheSize = (10 * 1024 * 1024).toLong() // 10 MiB
+        private const val timeout = 30L
+    }
+
     @Provides
     @Singleton
     fun provideDefaultGsonBuilder(): GsonBuilder {
@@ -54,7 +59,7 @@ class NetworkModule {
     @Provides
     @Singleton
     internal fun provideOkHttpCache(application: Application): Cache {
-        return Cache(application.cacheDir, (10 * 1024 * 1024).toLong()) // 10 MiB
+        return Cache(application.cacheDir, maxCacheSize)
     }
 
     @Provides
@@ -64,8 +69,8 @@ class NetworkModule {
         return OkHttpClient.Builder()
             .cache(cache)
             .addInterceptor(loggingInterceptor)
-            .readTimeout(30, TimeUnit.SECONDS)
-            .connectTimeout(30, TimeUnit.SECONDS)
+            .readTimeout(timeout, TimeUnit.SECONDS)
+            .connectTimeout(timeout, TimeUnit.SECONDS)
             .build()
     }
 
@@ -75,8 +80,8 @@ class NetworkModule {
     internal fun provideOkHttpClient(loggingInterceptor: HttpLoggingInterceptor): OkHttpClient {
         return OkHttpClient.Builder()
             .addInterceptor(loggingInterceptor)
-            .readTimeout(30, TimeUnit.SECONDS)
-            .connectTimeout(30, TimeUnit.SECONDS)
+            .readTimeout(timeout, TimeUnit.SECONDS)
+            .connectTimeout(timeout, TimeUnit.SECONDS)
             .build()
     }
 

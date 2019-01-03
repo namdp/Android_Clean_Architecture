@@ -16,14 +16,22 @@ import dagger.Provides
 @Module
 class RepositoryBuildersModule {
     @Provides
-    fun providesRepoRepository(appExecutors: AppExecutors, githubDb: GithubDb,
-                               githubService: GithubService, repoDao: RepoDao): RepoRepository {
+    fun providesRepoRepository(
+        appExecutors: AppExecutors,
+        githubDb: GithubDb,
+        githubService: GithubService,
+        repoDao: RepoDao
+    ): RepoRepository {
         return RepoRepositoryImpl(appExecutors, githubDb, githubService, repoDao)
     }
 
     @Provides
-    fun providesUserRepository(appExecutors: AppExecutors, githubDb: GithubDb,
-                               githubService: GithubService, userDao: UserDao): UserRepository {
+    fun providesUserRepository(
+        appExecutors: AppExecutors,
+        githubDb: GithubDb,
+        githubService: GithubService,
+        userDao: UserDao
+    ): UserRepository {
         return UserRepositoryImpl(appExecutors, githubDb, githubService, userDao)
     }
 }

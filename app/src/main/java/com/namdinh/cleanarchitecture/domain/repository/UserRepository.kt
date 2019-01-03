@@ -7,6 +7,6 @@ import javax.inject.Singleton
 
 @Singleton
 interface UserRepository {
-    // @todo Room: we wrapped into `List` to get an empty list instead of complete silence if there is no record
+    // TODO Room: we wrapped into `List` to get an empty list instead of complete silence if there is no record
     fun loadUser(login: String): Flowable<Resource<List<User>>>
 }

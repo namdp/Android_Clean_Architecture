@@ -17,8 +17,13 @@ import javax.inject.Singleton
  */
 @Singleton
 open class AppExecutors(private val diskIO: Executor, private val networkIO: Executor, private val mainThread: Executor) {
+
+    companion object {
+        private const val nThreads = 3
+    }
+
     @Inject
-    constructor() : this(Executors.newSingleThreadExecutor(), Executors.newFixedThreadPool(3), MainThreadExecutor()
+    constructor() : this(Executors.newSingleThreadExecutor(), Executors.newFixedThreadPool(nThreads), MainThreadExecutor()
     )
 
     fun diskIO(): Executor {

@@ -32,17 +32,18 @@ class SearchFragment : BaseFragment<SearchFragmentBinding, SearchViewModel>() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         initRecyclerView()
+        observeViewModelData()
+        initSearchInputListener()
+        initRetryCallback()
+    }
+
+    private fun initRecyclerView() {
         val rvAdapter = RepoListAdapter(appExecutors = appExecutors, showFullName = true) { repo ->
             navController.navigate(SearchFragmentDirections.showRepo(repo.owner.login, repo.name))
         }
         binding.rvRepo.adapter = rvAdapter
         adapter = rvAdapter
 
-        initSearchInputListener()
-        initRetryCallback()
-    }
-
-    private fun initRecyclerView() {
         binding.rvRepo.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 val layoutManager = recyclerView.layoutManager as LinearLayoutManager
@@ -52,6 +53,14 @@ class SearchFragment : BaseFragment<SearchFragmentBinding, SearchViewModel>() {
                 }
             }
         })
+    }
+
+    private fun observeViewModelData() {
+        observeRepositories()
+        observeLoadMoreStatus()
+    }
+
+    private fun observeRepositories() {
         viewModel.repositories.observe(this, Observer { resource ->
             binding.searchResource = resource // binding loading(error) state
             when (resource) {
@@ -68,7 +77,9 @@ class SearchFragment : BaseFragment<SearchFragmentBinding, SearchViewModel>() {
                 }
             }
         })
+    }
 
+    private fun observeLoadMoreStatus() {
         viewModel.loadMoreStatus.observe(this, Observer { loadingMore ->
             if (loadingMore == null) {
                 binding.loadingMore = false

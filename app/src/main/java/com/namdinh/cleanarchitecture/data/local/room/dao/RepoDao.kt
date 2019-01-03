@@ -29,7 +29,7 @@ abstract class RepoDao {
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     abstract fun createRepoIfNotExists(repo: RepoEntity): Long
 
-    // @todo Room: we wrapped into `List` to get an empty list instead of complete silence if there is no record
+    // TODO Room: we wrapped into `List` to get an empty list instead of complete silence if there is no record
     @Query("SELECT * FROM repoEntity WHERE owner_login = :ownerLogin AND name = :name")
     abstract fun load(ownerLogin: String, name: String): Flowable<List<RepoEntity>>
 
@@ -52,7 +52,7 @@ abstract class RepoDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     abstract fun insert(result: RepoSearchResultEntity)
 
-    // @todo Room: we wrapped into `List` to get an empty list instead of complete silence if there is no record
+    // TODO Room: we wrapped into `List` to get an empty list instead of complete silence if there is no record
     @Query("SELECT * FROM RepoSearchResultEntity WHERE `query` = :query")
     abstract fun search(query: String): Flowable<List<RepoSearchResultEntity>>
 
@@ -73,7 +73,7 @@ abstract class RepoDao {
     @Query("SELECT * FROM RepoEntity WHERE id in (:repoIds)")
     protected abstract fun loadById(repoIds: List<Int>): Flowable<List<RepoEntity>>
 
-    // @todo Room: we wrapped into `List` to get an empty list instead of complete silence if there is no record
+    // TODO Room: we wrapped into `List` to get an empty list instead of complete silence if there is no record
     @Query("SELECT * FROM RepoSearchResultEntity WHERE `query` = :query")
     abstract fun findSearchResult(query: String): Single<List<RepoSearchResultEntity>>
 }

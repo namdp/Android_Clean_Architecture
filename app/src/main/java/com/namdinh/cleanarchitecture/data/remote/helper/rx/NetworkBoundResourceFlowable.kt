@@ -22,7 +22,7 @@ import timber.log.Timber
  *
  * - Reference: https://codinginfinite.com/android-room-persistent-rxjava
  */
-abstract class NetworkBoundResourceFlowable<ResultType, RequestType>() {
+abstract class NetworkBoundResourceFlowable<ResultType, RequestType> {
 
     private val result: Flowable<Resource<ResultType>>
 
