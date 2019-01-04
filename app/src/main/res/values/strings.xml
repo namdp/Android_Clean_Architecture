@@ -10,7 +10,4 @@
     <string name="empty_search_result">No results for <b>%s</b></string>
     <string name="contributor_avatar">contributor avatar</string>
 
-    <string name="jenkins">Jenkins</string>
-    <string name="jenkins2">Jenkins2</string>
-
 </resources>
