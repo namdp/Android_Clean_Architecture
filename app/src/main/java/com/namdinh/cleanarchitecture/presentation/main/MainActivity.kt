@@ -16,5 +16,6 @@ class MainActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         //Test trigger 1
         //Test trigger 2
+        //Test trigger 3
     }
 }
