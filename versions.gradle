@@ -15,9 +15,9 @@
  */
 
 /**
-* Shared file between builds so that they can all use the same dependencies and
-* maven repositories.
-**/
+ * Shared file between builds so that they can all use the same dependencies and
+ * maven repositories.
+ **/
 ext.deps = [:]
 
 def build_versions = [:]
@@ -53,6 +53,8 @@ versions.timber = "4.5.1"
 
 versions.ktlint = "0.29.0"
 versions.detekt = "1.0.0-RC12"
+
+versions.testRunner = "1.0.2"
 
 def deps = [:]
 deps.android_gradle_plugin = "com.android.tools.build:gradle:$versions.android_gradle_plugin"
@@ -144,6 +146,10 @@ deps.timber = "com.jakewharton.timber:timber:$versions.timber"
 deps.ktlint = "com.github.shyiko:ktlint:$versions.ktlint"
 deps.detekt = "io.gitlab.arturbosch.detekt:detekt-gradle-plugin:$versions.detekt"
 deps.detekt_formatting = "io.gitlab.arturbosch.detekt:detekt-formatting:$versions.detekt"
+
+def test = [:]
+test.testRunner = "com.android.support.test:runner:$versions.testRunner"
+deps.test = test
 
 ext.deps = deps
 

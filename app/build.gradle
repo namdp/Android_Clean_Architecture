@@ -110,6 +110,8 @@ dependencies {
     implementation deps.rx.uber_autodispose
 
     implementation deps.timber
+
+    testImplementation deps.test.testRunner
 }
 repositories {
     mavenCentral()
