@@ -24,6 +24,7 @@ class MainActivity : BaseActivity() {
         //Test trigger 8
         //Test trigger 9
         //Test trigger 10
+        //Test PR2
         //Test PR1
     }
 }
