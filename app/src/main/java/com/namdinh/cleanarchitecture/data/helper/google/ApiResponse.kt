@@ -1,4 +1,4 @@
-package com.namdinh.cleanarchitecture.data.remote.helper.google
+package com.namdinh.cleanarchitecture.data.helper.google
 
 import retrofit2.Response
 import timber.log.Timber
@@ -42,7 +42,7 @@ sealed class ApiResponse<T> {
 }
 
 /**
- * separate class for HTTP 204 resposes so that we can make ApiSuccessResponse's body non-null.
+ * separate class for HTTP 204 responses so that we can make ApiSuccessResponse's body non-null.
  */
 class ApiEmptyResponse<T> : ApiResponse<T>()
 

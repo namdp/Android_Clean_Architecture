@@ -1,8 +1,8 @@
 package com.namdinh.cleanarchitecture.data.remote
 
-import com.namdinh.cleanarchitecture.data.local.room.entity.ContributorEntity
-import com.namdinh.cleanarchitecture.data.local.room.entity.RepoEntity
-import com.namdinh.cleanarchitecture.data.local.room.entity.UserEntity
+import com.namdinh.cleanarchitecture.data.entity.ContributorEntity
+import com.namdinh.cleanarchitecture.data.entity.RepoEntity
+import com.namdinh.cleanarchitecture.data.entity.UserEntity
 import com.namdinh.cleanarchitecture.data.remote.response.RepoSearchResponse
 import io.reactivex.Flowable
 import io.reactivex.Single

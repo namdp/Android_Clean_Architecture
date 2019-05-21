@@ -4,9 +4,9 @@ import com.namdinh.cleanarchitecture.core.helper.AppExecutors
 import com.namdinh.cleanarchitecture.data.local.room.GithubDb
 import com.namdinh.cleanarchitecture.data.local.room.dao.RepoDao
 import com.namdinh.cleanarchitecture.data.local.room.dao.UserDao
-import com.namdinh.cleanarchitecture.data.local.room.repositoryimpl.RepoRepositoryImpl
-import com.namdinh.cleanarchitecture.data.local.room.repositoryimpl.UserRepositoryImpl
 import com.namdinh.cleanarchitecture.data.remote.GithubService
+import com.namdinh.cleanarchitecture.data.repositoryimpl.RepoRepositoryImpl
+import com.namdinh.cleanarchitecture.data.repositoryimpl.UserRepositoryImpl
 import com.namdinh.cleanarchitecture.domain.repository.RepoRepository
 import com.namdinh.cleanarchitecture.domain.repository.UserRepository
 import dagger.Module

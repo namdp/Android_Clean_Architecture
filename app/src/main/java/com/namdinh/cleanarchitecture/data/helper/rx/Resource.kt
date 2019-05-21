@@ -1,4 +1,4 @@
-package com.namdinh.cleanarchitecture.data.remote.helper.rx
+package com.namdinh.cleanarchitecture.data.helper.rx
 
 sealed class Resource<out T> {
     class Loading<out T> : Resource<T>()

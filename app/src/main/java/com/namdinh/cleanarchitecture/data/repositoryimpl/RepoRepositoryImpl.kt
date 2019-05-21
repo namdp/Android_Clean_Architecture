@@ -1,20 +1,20 @@
-package com.namdinh.cleanarchitecture.data.local.room.repositoryimpl
+package com.namdinh.cleanarchitecture.data.repositoryimpl
 
 import com.namdinh.cleanarchitecture.core.extension.toAppFailure
 import com.namdinh.cleanarchitecture.core.helper.AppExecutors
 import com.namdinh.cleanarchitecture.core.helper.RateLimiter
+import com.namdinh.cleanarchitecture.data.entity.ContributorEntity
+import com.namdinh.cleanarchitecture.data.entity.RepoEntity
+import com.namdinh.cleanarchitecture.data.entity.RepoSearchResultEntity
+import com.namdinh.cleanarchitecture.data.helper.google.ApiEmptyResponse
+import com.namdinh.cleanarchitecture.data.helper.google.ApiErrorResponse
+import com.namdinh.cleanarchitecture.data.helper.google.ApiResponse
+import com.namdinh.cleanarchitecture.data.helper.google.ApiSuccessResponse
+import com.namdinh.cleanarchitecture.data.helper.rx.NetworkBoundResourceFlowable
+import com.namdinh.cleanarchitecture.data.helper.rx.Resource
 import com.namdinh.cleanarchitecture.data.local.room.GithubDb
 import com.namdinh.cleanarchitecture.data.local.room.dao.RepoDao
-import com.namdinh.cleanarchitecture.data.local.room.entity.ContributorEntity
-import com.namdinh.cleanarchitecture.data.local.room.entity.RepoEntity
-import com.namdinh.cleanarchitecture.data.local.room.entity.RepoSearchResultEntity
 import com.namdinh.cleanarchitecture.data.remote.GithubService
-import com.namdinh.cleanarchitecture.data.remote.helper.google.ApiEmptyResponse
-import com.namdinh.cleanarchitecture.data.remote.helper.google.ApiErrorResponse
-import com.namdinh.cleanarchitecture.data.remote.helper.google.ApiResponse
-import com.namdinh.cleanarchitecture.data.remote.helper.google.ApiSuccessResponse
-import com.namdinh.cleanarchitecture.data.remote.helper.rx.NetworkBoundResourceFlowable
-import com.namdinh.cleanarchitecture.data.remote.helper.rx.Resource
 import com.namdinh.cleanarchitecture.data.remote.response.RepoSearchResponse
 import com.namdinh.cleanarchitecture.domain.repository.RepoRepository
 import com.namdinh.cleanarchitecture.domain.vo.Contributor
@@ -23,7 +23,7 @@ import io.reactivex.Flowable
 import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
-import java.util.* // ktlint-disable no-wildcard-imports
+import java.util.*
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 import javax.inject.Singleton

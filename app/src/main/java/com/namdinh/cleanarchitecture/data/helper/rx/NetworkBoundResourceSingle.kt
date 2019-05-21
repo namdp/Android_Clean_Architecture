@@ -1,11 +1,11 @@
-package com.namdinh.cleanarchitecture.data.remote.helper.rx
+package com.namdinh.cleanarchitecture.data.helper.rx
 
 import androidx.room.EmptyResultSetException
 import com.namdinh.cleanarchitecture.core.extension.toAppFailure
-import com.namdinh.cleanarchitecture.data.remote.helper.google.ApiEmptyResponse
-import com.namdinh.cleanarchitecture.data.remote.helper.google.ApiErrorResponse
-import com.namdinh.cleanarchitecture.data.remote.helper.google.ApiResponse
-import com.namdinh.cleanarchitecture.data.remote.helper.google.ApiSuccessResponse
+import com.namdinh.cleanarchitecture.data.helper.google.ApiEmptyResponse
+import com.namdinh.cleanarchitecture.data.helper.google.ApiErrorResponse
+import com.namdinh.cleanarchitecture.data.helper.google.ApiResponse
+import com.namdinh.cleanarchitecture.data.helper.google.ApiSuccessResponse
 import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers

@@ -1,7 +1,7 @@
 package com.namdinh.cleanarchitecture.data.remote.response
 
 import com.google.gson.annotations.SerializedName
-import com.namdinh.cleanarchitecture.data.local.room.entity.RepoEntity
+import com.namdinh.cleanarchitecture.data.entity.RepoEntity
 
 /**
  * Simple object to hold repo search responses. This is different from the Entity in the database

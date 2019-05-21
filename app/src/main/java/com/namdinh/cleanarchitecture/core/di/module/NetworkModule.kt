@@ -5,8 +5,8 @@ import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.namdinh.cleanarchitecture.BuildConfig
 import com.namdinh.cleanarchitecture.core.di.qualifier.ServerAddress
+import com.namdinh.cleanarchitecture.data.helper.google.LiveDataCallAdapterFactory
 import com.namdinh.cleanarchitecture.data.remote.GithubService
-import com.namdinh.cleanarchitecture.data.remote.helper.google.LiveDataCallAdapterFactory
 import dagger.Module
 import dagger.Provides
 import okhttp3.Cache

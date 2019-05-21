@@ -5,7 +5,7 @@ import androidx.lifecycle.LiveDataReactiveStreams
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
 import com.namdinh.cleanarchitecture.core.helper.AbsentLiveData
-import com.namdinh.cleanarchitecture.data.remote.helper.rx.Resource
+import com.namdinh.cleanarchitecture.data.helper.rx.Resource
 import com.namdinh.cleanarchitecture.domain.repository.RepoRepository
 import com.namdinh.cleanarchitecture.domain.vo.Contributor
 import com.namdinh.cleanarchitecture.domain.vo.Repo

@@ -1,6 +1,6 @@
 package com.namdinh.cleanarchitecture.core.extension
 
-import com.namdinh.cleanarchitecture.data.remote.helper.exception.Failure
+import com.namdinh.cleanarchitecture.data.helper.exception.Failure
 import retrofit2.HttpException
 import java.io.IOException
 

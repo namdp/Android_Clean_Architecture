@@ -1,6 +1,6 @@
 package com.namdinh.cleanarchitecture.domain.repository
 
-import com.namdinh.cleanarchitecture.data.remote.helper.rx.Resource
+import com.namdinh.cleanarchitecture.data.helper.rx.Resource
 import com.namdinh.cleanarchitecture.domain.vo.User
 import io.reactivex.Flowable
 import javax.inject.Singleton

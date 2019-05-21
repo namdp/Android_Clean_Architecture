@@ -1,4 +1,4 @@
-package com.namdinh.cleanarchitecture.data.local.room.entity
+package com.namdinh.cleanarchitecture.data.entity
 
 import androidx.room.Embedded
 import androidx.room.Entity

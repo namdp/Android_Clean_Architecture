@@ -6,7 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
 import com.namdinh.cleanarchitecture.core.extension.toAppFailure
 import com.namdinh.cleanarchitecture.core.helper.AbsentLiveData
-import com.namdinh.cleanarchitecture.data.remote.helper.rx.Resource
+import com.namdinh.cleanarchitecture.data.helper.rx.Resource
 import com.namdinh.cleanarchitecture.domain.usecase.SearchNextRepositories
 import com.namdinh.cleanarchitecture.domain.usecase.SearchRepositories
 import com.namdinh.cleanarchitecture.domain.vo.Repo

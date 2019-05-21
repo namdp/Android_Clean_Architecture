@@ -7,7 +7,7 @@
 
         <import type="android.view.View" />
 
-        <import type="com.namdinh.cleanarchitecture.data.remote.helper.rx.Resource" />
+        <import type="com.namdinh.cleanarchitecture.data.helper.rx.Resource" />
 
         <variable
             name="repo"

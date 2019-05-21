@@ -6,7 +6,7 @@ import androidx.lifecycle.ViewModelProviders
 import com.namdinh.cleanarchitecture.R
 import com.namdinh.cleanarchitecture.core.helper.AppExecutors
 import com.namdinh.cleanarchitecture.core.helper.autoCleared
-import com.namdinh.cleanarchitecture.data.remote.helper.rx.Resource
+import com.namdinh.cleanarchitecture.data.helper.rx.Resource
 import com.namdinh.cleanarchitecture.databinding.RepoFragmentBinding
 import com.namdinh.cleanarchitecture.presentation.base.fragment.BaseFragment
 import com.namdinh.cleanarchitecture.presentation.base.view.RetryCallback

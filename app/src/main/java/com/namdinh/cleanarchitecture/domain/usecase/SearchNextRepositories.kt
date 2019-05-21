@@ -1,6 +1,6 @@
 package com.namdinh.cleanarchitecture.domain.usecase
 
-import com.namdinh.cleanarchitecture.data.remote.helper.rx.Resource
+import com.namdinh.cleanarchitecture.data.helper.rx.Resource
 import com.namdinh.cleanarchitecture.domain.repository.RepoRepository
 import io.reactivex.Single
 import javax.inject.Inject

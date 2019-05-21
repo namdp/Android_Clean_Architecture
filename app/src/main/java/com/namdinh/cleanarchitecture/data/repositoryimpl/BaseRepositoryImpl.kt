@@ -1,4 +1,4 @@
-package com.namdinh.cleanarchitecture.data.local.room.repositoryimpl
+package com.namdinh.cleanarchitecture.data.repositoryimpl
 
 import com.namdinh.cleanarchitecture.core.helper.AppExecutors
 import com.namdinh.cleanarchitecture.data.local.room.GithubDb

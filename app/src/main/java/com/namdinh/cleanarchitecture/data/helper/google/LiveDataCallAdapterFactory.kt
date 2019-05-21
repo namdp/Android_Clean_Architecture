@@ -1,4 +1,4 @@
-package com.namdinh.cleanarchitecture.data.remote.helper.google
+package com.namdinh.cleanarchitecture.data.helper.google
 
 import androidx.lifecycle.LiveData
 import retrofit2.CallAdapter

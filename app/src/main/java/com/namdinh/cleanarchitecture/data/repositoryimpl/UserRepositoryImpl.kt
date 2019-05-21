@@ -1,13 +1,13 @@
-package com.namdinh.cleanarchitecture.data.local.room.repositoryimpl
+package com.namdinh.cleanarchitecture.data.repositoryimpl
 
 import com.namdinh.cleanarchitecture.core.helper.AppExecutors
 import com.namdinh.cleanarchitecture.core.helper.RateLimiter
+import com.namdinh.cleanarchitecture.data.entity.UserEntity
+import com.namdinh.cleanarchitecture.data.helper.rx.NetworkBoundResourceFlowable
+import com.namdinh.cleanarchitecture.data.helper.rx.Resource
 import com.namdinh.cleanarchitecture.data.local.room.GithubDb
 import com.namdinh.cleanarchitecture.data.local.room.dao.UserDao
-import com.namdinh.cleanarchitecture.data.local.room.entity.UserEntity
 import com.namdinh.cleanarchitecture.data.remote.GithubService
-import com.namdinh.cleanarchitecture.data.remote.helper.rx.NetworkBoundResourceFlowable
-import com.namdinh.cleanarchitecture.data.remote.helper.rx.Resource
 import com.namdinh.cleanarchitecture.domain.repository.UserRepository
 import com.namdinh.cleanarchitecture.domain.vo.User
 import io.reactivex.Flowable

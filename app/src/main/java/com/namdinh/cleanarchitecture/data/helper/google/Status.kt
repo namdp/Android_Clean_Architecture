@@ -1,4 +1,4 @@
-package com.namdinh.cleanarchitecture.data.remote.helper.google
+package com.namdinh.cleanarchitecture.data.helper.google
 
 /**
  * Status of a resource that is provided to the UI.

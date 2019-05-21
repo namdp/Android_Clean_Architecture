@@ -2,12 +2,12 @@ package com.namdinh.cleanarchitecture.data.local.room
 
 import androidx.room.Database
 import androidx.room.RoomDatabase
+import com.namdinh.cleanarchitecture.data.entity.ContributorEntity
+import com.namdinh.cleanarchitecture.data.entity.RepoEntity
+import com.namdinh.cleanarchitecture.data.entity.RepoSearchResultEntity
+import com.namdinh.cleanarchitecture.data.entity.UserEntity
 import com.namdinh.cleanarchitecture.data.local.room.dao.RepoDao
 import com.namdinh.cleanarchitecture.data.local.room.dao.UserDao
-import com.namdinh.cleanarchitecture.data.local.room.entity.ContributorEntity
-import com.namdinh.cleanarchitecture.data.local.room.entity.RepoEntity
-import com.namdinh.cleanarchitecture.data.local.room.entity.RepoSearchResultEntity
-import com.namdinh.cleanarchitecture.data.local.room.entity.UserEntity
 
 /**
  * Main database description.

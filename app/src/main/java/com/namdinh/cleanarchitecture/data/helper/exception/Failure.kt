@@ -1,4 +1,4 @@
-package com.namdinh.cleanarchitecture.data.remote.helper.exception
+package com.namdinh.cleanarchitecture.data.helper.exception
 
 /**
  * Base Class for handling errors/failures/exceptions.

@@ -1,6 +1,6 @@
 package com.namdinh.cleanarchitecture.domain.repository
 
-import com.namdinh.cleanarchitecture.data.remote.helper.rx.Resource
+import com.namdinh.cleanarchitecture.data.helper.rx.Resource
 import com.namdinh.cleanarchitecture.domain.vo.Contributor
 import com.namdinh.cleanarchitecture.domain.vo.Repo
 import io.reactivex.Flowable

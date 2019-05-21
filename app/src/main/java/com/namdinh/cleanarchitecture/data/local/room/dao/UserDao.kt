@@ -4,7 +4,7 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import com.namdinh.cleanarchitecture.data.local.room.entity.UserEntity
+import com.namdinh.cleanarchitecture.data.entity.UserEntity
 import io.reactivex.Flowable
 
 /**

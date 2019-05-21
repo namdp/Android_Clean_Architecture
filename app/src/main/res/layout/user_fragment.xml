@@ -16,7 +16,7 @@
 
         <variable
             name="userResource"
-            type="com.namdinh.cleanarchitecture.data.remote.helper.rx.Resource" />
+            type="com.namdinh.cleanarchitecture.data.helper.rx.Resource" />
 
         <variable
             name="retryCallback"
