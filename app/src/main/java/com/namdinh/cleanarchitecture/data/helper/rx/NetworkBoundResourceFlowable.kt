@@ -48,8 +48,7 @@ abstract class NetworkBoundResourceFlowable<ResultType, RequestType> {
                 // Read/Write to disk on Computation Scheduler
                 .observeOn(Schedulers.computation())
                 .map {
-                    val response = ApiResponse.create(it)
-                    when (response) {
+                    when (val response = ApiResponse.create(it)) {
                         is ApiSuccessResponse -> saveCallResult(processResponse(response))
                         is ApiErrorResponse -> throw response.throwable
                         is ApiEmptyResponse -> Timber.d("ApiEmptyResponse")

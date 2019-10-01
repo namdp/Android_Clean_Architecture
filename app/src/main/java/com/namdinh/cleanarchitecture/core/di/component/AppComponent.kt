@@ -25,7 +25,8 @@ import javax.inject.Singleton
         RealmModule::class,
         RepositoryBuildersModule::class,
         ActivityBuildersModule::class,
-        FragmentBuildersModule::class]
+        FragmentBuildersModule::class
+    ]
 )
 interface AppComponent {
 

@@ -104,7 +104,7 @@ class NetworkModule {
 
     @Provides
     @Singleton
-    internal fun provideIThinkApi(retrofit: Retrofit): GithubService {
+    internal fun provideServiceApi(retrofit: Retrofit): GithubService {
         return retrofit.create(GithubService::class.java)
     }
 }
