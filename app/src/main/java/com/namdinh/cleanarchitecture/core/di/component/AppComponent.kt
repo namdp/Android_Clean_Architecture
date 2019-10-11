@@ -4,7 +4,6 @@ import android.app.Application
 import com.namdinh.cleanarchitecture.CleanArchitectureApp
 import com.namdinh.cleanarchitecture.core.di.module.AppModule
 import com.namdinh.cleanarchitecture.core.di.module.NetworkModule
-import com.namdinh.cleanarchitecture.core.di.module.RealmModule
 import com.namdinh.cleanarchitecture.core.di.module.RoomModule
 import com.namdinh.cleanarchitecture.core.di.module.builder.ActivityBuildersModule
 import com.namdinh.cleanarchitecture.core.di.module.builder.FragmentBuildersModule
@@ -22,7 +21,6 @@ import javax.inject.Singleton
         AppModule::class,
         NetworkModule::class,
         RoomModule::class,
-        RealmModule::class,
         RepositoryBuildersModule::class,
         ActivityBuildersModule::class,
         FragmentBuildersModule::class
@@ -40,9 +38,6 @@ interface AppComponent {
         // bind server address String to NetworkModule
         @BindsInstance
         fun serverAddress(@ServerAddress serverAddress: String): Builder
-
-        // bind Realm module manually
-        fun realmModule(realmModule: RealmModule): Builder
 
         fun build(): AppComponent
     }

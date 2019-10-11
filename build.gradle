@@ -16,7 +16,6 @@ buildscript {
         classpath deps.kotlin.plugin
         classpath deps.kotlin.allopen
         classpath deps.navigation.safe_args_plugin
-        classpath deps.realm
         classpath deps.detekt
 
         // NOTE: Do not place your application dependencies here; they belong

@@ -12,7 +12,6 @@ import com.namdinh.cleanarchitecture.CleanArchitectureApp
 import com.namdinh.cleanarchitecture.core.di.component.DaggerAppComponent
 import com.namdinh.cleanarchitecture.core.di.component.DaggerBindingComponent
 import com.namdinh.cleanarchitecture.core.di.helper.Injectable
-import com.namdinh.cleanarchitecture.core.di.module.RealmModule
 import dagger.android.AndroidInjection
 import dagger.android.support.AndroidSupportInjection
 import dagger.android.support.HasSupportFragmentInjector
@@ -22,9 +21,9 @@ import dagger.android.support.HasSupportFragmentInjector
  */
 object AppInjector {
     fun init(cleanArchitectureApp: CleanArchitectureApp) {
-        val appComponent = DaggerAppComponent.builder().application(application = cleanArchitectureApp)
-            .serverAddress(serverAddress = BuildConfig.SERVER_ADDRESS)
-            .realmModule(RealmModule(application = cleanArchitectureApp)).build()
+        val appComponent =
+            DaggerAppComponent.builder().application(application = cleanArchitectureApp)
+                .serverAddress(serverAddress = BuildConfig.SERVER_ADDRESS).build()
         appComponent.inject(cleanArchitectureApp)
 
         // data binding

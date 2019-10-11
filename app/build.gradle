@@ -3,7 +3,6 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
 apply plugin: 'kotlin-allopen'
 apply plugin: 'androidx.navigation.safeargs'
-apply plugin: 'realm-android'
 
 android {
     compileSdkVersion build_versions.target_sdk
